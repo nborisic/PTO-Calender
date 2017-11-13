@@ -79,68 +79,6 @@ button:hover {
   background: $white;
 }
 
-.Menu {
-  align-items: center;
-  border-bottom: 1px solid $grey-border;
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 2rem;
-  margin: 0 auto 2rem;
-  max-width: 60rem;
-
-  @include lg {
-    margin-left: 20rem;
-    margin: 0 0 2rem 20rem;
-    padding-bottom: 0;
-  }
-}
-
-.Menu img {
-  display: block;
-}
-
-.Menu-logo {
-  margin-right: 2rem;
-  width: 6rem;
-
-  @include lg {
-    position: fixed;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    border-right: 1px solid $grey-border;
-    width: 20rem;
-    padding: 4rem;
-  }
-}
-
-.Menu-links {
-  @include md {
-  }
-}
-
-.Menu-link {
-  display: inline-block;
-  font-family: $font-family-serif;
-  font-style: italic;
-  margin-left: 1.5rem;
-  line-height: 3rem;
-  text-decoration: none;
-
-  @include md {
-    margin-left: 3rem;
-  }
-
-  @include lg {
-    margin: 0 3rem 0 0;
-    line-height: 7.5rem;
-  }
-}
-
-.Menu-link--active {
-  color: $black;
-}
-
 .Page {
   max-width: 60rem;
   margin: 0 auto;
@@ -148,33 +86,4 @@ button:hover {
   @include lg {
     margin: 0 0 0 20rem;
   }
-}
-
-.Example {
-  background: #F6F8FA;
-  padding: 2rem;
-  border-radius: 0.4rem;
-}
-
-.Example .Icon {
-  margin-right: 10px;
-}
-
-.BackgroundImgExample {
-  background-image: url(../assets/img/book1.jpg);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 16rem;
-  max-width: 25rem;
-}
-
-.ImgExample {
-  max-width: 25rem;
-}
-
-hr {
-  border: 0;
-  border-top: 1px solid $grey-border;
-  margin: 2rem 0;
 }
