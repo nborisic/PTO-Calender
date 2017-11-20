@@ -64,26 +64,197 @@ h3 {
 
 button {
   background: transparent;
-  border-radius: 1.6rem;
+  //border-radius: 1.6rem;
   border: 0.1rem solid $black;
   cursor: pointer;
   font-size: 1.5rem;
-  padding: 0.7rem 2rem;
+  //padding: 0.7rem 2rem;
 }
 
 button:disabled {
   opacity: 0.3;
 }
 
-button:hover {
-  background: $white;
-}
+// button:hover {
+//   background: $white;
+// }
 
 .Page {
-  max-width: 60rem;
+  // max-width: 60rem;
   margin: 0 auto;
 
-  @include lg {
-    margin: 0 0 0 20rem;
+  // @include lg {
+  //   margin: 0 0 0 20rem;
+  // }
+}
+
+.container {
+  margin-top: 80px;
+  display: flex;
+}
+
+.circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  background-color: $grey-text;
+  margin: 5px;
+}
+
+.weekContainer {
+  width: 100%;
+  overflow: hidden;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+.daysRow {
+  width: 300%;
+  flex-wrap: wrap;
+  display: flex;
+  height: 100%
+}
+
+.oneWeek {
+  display: flex;
+  border-left: 1px solid black;
+  justify-content: space-around;
+
+  &:nth-child(4n + 1) {
+    border-left-color: transparent;
+  }
+}
+
+.animateClass {
+  display: flex;
+  border-left: 1px solid black;
+  justify-content: space-around;
+}
+
+.overflow {
+  overflow: scroll;
+  height: 100px;
+  width: 100px;
+  box-shadow: 10px 10px 5px #888888;
+}
+
+.item {
+  height: 25px;
+}
+
+.addFilter {
+  &:hover {
+    background-image: url(../assets/img/filterButtonHover.svg);
+  }
+  background-image: url(../assets/img/filterButton.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: none;
+  outline: none;
+  display: flex;
+  width: 30px;
+  height: 30px;
+}
+
+.rotate {
+  @extend .addFilter;
+  transform: rotate(45deg);
+  transition: transform 1s;
+}
+
+.filterInput {
+  &::placeholder {
+    color: grey;
+  }
+  animation: slideIn 1s ease;
+  outline: none;
+  border: none;
+  margin-top: 10px;
+  border-bottom: 1px solid black;
+  width: 18em;
+  &:focus {
+    border: none;
+    border-bottom: 2px solid red;
+  }
+}
+@keyframes slideIn {
+  0%   { transform: translateX(-18em);}
+  100% { transform: translateX(0em); }
+}
+
+.invisible {
+  display: none;
+}
+
+.filterDrop {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropMenu {
+  border: 1px solid gray;
+  border-top: none;
+  width: 18em;
+  border-radius: 0 0 10px 10px;
+  padding: 10px 0;
+  max-height: 96px;
+  overflow: scroll;
+  button {
+    height: 25px;
+    width: 100%;
+    border: none;
+    &:hover {
+      background-color: gray;
+    }
+  }
+}
+
+.elementDiv {
+  display: inline-flex;
+  width: auto;
+  border: 0.5px solid grey;
+  padding: 5px;
+  border-radius: 3px;
+  height: 1.8em;
+  button {
+    outline: none;
+    border: none;
+  }
+}
+
+.rightButton {
+  border: none;
+  outline: none;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  &:hover {
+    background-image: url(../assets/img/rightHover.svg);
+  }
+  background-image: url(../assets/img/right.svg);
+
+  height: 30px;
+  width: 30px;
+}
+
+.leftButton {
+  @extend .rightButton;
+  transform: rotate(180deg);
+}
+
+.employeeContainer {
+  display: flex;
+}
+
+.employeeInfo {
+  width: 30%;
+  display: flex;
+  >span {
+    margin-left: 10px;
+    align-self: center;
   }
 }

@@ -1,7 +1,6 @@
 import { Map } from 'immutable';
 
 import {
-  TEST_ACTION,
   TEST_ASYNC_ACTION_START,
   TEST_ASYNC_ACTION_ERROR,
   TEST_ASYNC_ACTION_SUCCESS,
@@ -15,14 +14,6 @@ const initialState = Map({
 });
 
 const actionsMap = {
-  [TEST_ACTION]: (state) => {
-    const counter = state.get('counter') + 1;
-
-    return state.merge(Map({
-      counter,
-    }));
-  },
-
   // Async action
   [TEST_ASYNC_ACTION_START]: (state) => {
     return state.merge(Map({
