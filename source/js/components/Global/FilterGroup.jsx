@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default class FilterGroup extends Component {
   static propTypes = {
-    dispatch: PropTypes.func,
+
   }
 
   constructor() {
@@ -78,7 +78,7 @@ export default class FilterGroup extends Component {
     const inputClass = this.state.click ? 'filterInput' : 'invisible';
 
     return (
-      <div className='container'>
+      <div className='FilterGroup'>
         { this.state.buttonsArray }
         <button
           className={ buttonClass }

@@ -88,10 +88,6 @@ button:disabled {
   // }
 }
 
-.container {
-  margin-top: 80px;
-  display: flex;
-}
 
 .circle {
   display: inline-flex;
@@ -257,4 +253,18 @@ button:disabled {
     margin-left: 10px;
     align-self: center;
   }
+}
+
+.logoGroup {
+  display: flex;
+}
+
+.FilterGroup {
+  display: flex;
+  align-self: center;
+}
+
+.hedder {
+  display: flex;
+  justify-content: space-between;
 }
