@@ -96,8 +96,15 @@ button:disabled {
   height: 3rem;
   width: 3rem;
   border-radius: 50%;
-  background-color: $grey-text;
   margin: 5px;
+}
+
+.redCircle {
+  background-color: red;
+}
+
+.blueCircle {
+  background-color: blue;
 }
 
 .weekContainer {

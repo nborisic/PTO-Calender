@@ -6,35 +6,37 @@ import CalendarSlider from 'components/Global/CalendarSlider';
 
 const employeeObj = {
   'Andy Baudoin': {
-    Projects: ['Apple - C3PO Content Strategy'],
-    Location: 'New York',
-    Discipline: 'Technology',
+    projects: ['Apple - C3PO Content Strategy'],
+    location: 'New York',
+    discipline: 'Technology',
     src: '',
-    PTO: [
-      { start: '22/11/2017',
-        end: '30/11/2017' },
-      { start: '22/11/2017',
-        end: '30/11/2017' },
+    pto: [
+      { start: '11/22/2017',
+        end: '11/30/2017' },
+      { start: '12/10/2017',
+        end: '12/12/2017' },
+      { start: '02/01/2018',
+        end: '02/05/2018' },
     ],
-    Remote: [
-      { start: '05/12/2017',
-        end: '05/12/2017' },
+    remote: [
+      { start: '12/05/2017',
+        end: '12/05/2017' },
     ],
   },
   'Chris Alden': {
-    Projects: ['Apple - Future of Retail'],
-    Location: 'New York',
-    Discipline: 'Technology',
+    projects: ['Apple - Future of Retail'],
+    location: 'New York',
+    discipline: 'Technology',
     src: '',
-    PTO: [
-      { start: '23/11/2017',
-        end: '05/12/2017' },
-      { start: '22/12/2017',
-        end: '30/12/2017' },
+    pto: [
+      { start: '11/23/2017',
+        end: '12/05/2017' },
+      { start: '12/22/2017',
+        end: '12/30/2017' },
     ],
-    Remote: [
-      { start: '06/12/2017',
-        end: '07/12/2017' },
+    remote: [
+      { start: '12/06/2017',
+        end: '12/07/2017' },
     ],
   },
 };

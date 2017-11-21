@@ -25,6 +25,7 @@ export default class CalendarSlider extends Component {
     };
 
     this.offsetCalendar = this.offsetCalendar.bind(this);
+    this.renderRows = this.renderRows.bind(this);
   }
 
   componentWillMount() {
@@ -47,9 +48,9 @@ export default class CalendarSlider extends Component {
     for (let k = 0; k < 12; k++) {
       weekStart = calendarStart.clone().add(k, 'week');
       const oneWeek = [];
-      oneWeek.push(weekStart.format('D'));
+      oneWeek.push(weekStart);
       for (let i = 1; i < 5; i++) {
-        const oneDay = weekStart.clone().add(i, 'day').format('D');
+        const oneDay = weekStart.clone().add(i, 'day');
         oneWeek.push(oneDay);
       }
       allWeeks.push(oneWeek);
@@ -80,6 +81,24 @@ export default class CalendarSlider extends Component {
     }, ANIMATION_DURAION);
   }
 
+  renderRows() {
+    const { allEmployees } = this.props;
+    const allEmployeesArray = [];
+    const allEmployeesKeys = Object.keys(allEmployees);
+    for (let i = 0; i < allEmployeesKeys.length; i++) {
+      allEmployeesArray.push(
+        <EmployeeRow
+          key={ allEmployeesKeys[i] }
+          employeeName={ allEmployeesKeys[i] }
+          oneEmployee={ allEmployees[allEmployeesKeys[i]] }
+          animate={ this.state.animate }
+          allWeeks={ this.state.allWeeks }
+        />
+      );
+    }
+    return allEmployeesArray;
+  }
+
 
   render() {
     return (
@@ -96,10 +115,7 @@ export default class CalendarSlider extends Component {
             scrollClick={ this.offsetCalendar }
           />
         </div>
-        <EmployeeRow
-          animate={ this.state.animate }
-          allWeeks={ this.state.allWeeks }
-        />
+        { this.renderRows() }
       </div>
     );
   }
