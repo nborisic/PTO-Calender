@@ -199,6 +199,10 @@ button:disabled {
 }
 
 .dropMenu {
+  position: absolute;
+  margin-top: 35px;
+  z-index: 1;
+  background-color: white;
   border: 1px solid gray;
   border-top: none;
   width: 18em;
@@ -239,7 +243,7 @@ button:disabled {
     background-image: url(../assets/img/rightHover.svg);
   }
   background-image: url(../assets/img/right.svg);
-
+  margin-left: 20px;
   height: 30px;
   width: 30px;
 }
@@ -274,4 +278,8 @@ button:disabled {
 .hedder {
   display: flex;
   justify-content: space-between;
+}
+
+.calendarTable {
+  margin-top: 80px;
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import Andy from '../../../assets/img/Andy_01.png';
+
 
 const ANIMATION_DURAION = 2000;
 
@@ -72,14 +72,14 @@ export default class EmplyeeRow extends Component {
     }
 
 
-  //  console.log(this.props.oneEmployee);
+    // console.log(this.props.oneEmployee);
 
     return (
       <div className='employeeContainer'>
         <div className='employeeInfo'>
           <img
-            src={ Andy }
-            alt='Andy'
+            src={ oneEmployee.src }
+            alt={ employeeName }
           />
           <span>{ employeeName }</span>
         </div>
