@@ -17,15 +17,22 @@ export default class CalendarSlider extends Component {
     this.clanederHeader = this.clanederHeader.bind(this);
   }
 
+  clanederHeader() {
+    return (
+      <CalenderHeadrer
+        allWeeks={ this.props.allWeeks }
+        animate={ this.props.animate }
+      />
+    );
+  }
+
   renderRows() {
     const { allEmployees } = this.props;
     const allEmployeesArray = [];
     const allEmployeesKeys = Object.keys(allEmployees);
     for (let i = 0; i < allEmployeesKeys.length; i++) {
-      const first = i === 0;
       allEmployeesArray.push(
         <EmployeeRow
-          first={ first }
           key={ allEmployeesKeys[i] }
           employeeName={ allEmployeesKeys[i] }
           oneEmployee={ allEmployees[allEmployeesKeys[i]] }
@@ -35,15 +42,6 @@ export default class CalendarSlider extends Component {
       );
     }
     return allEmployeesArray;
-  }
-
-  clanederHeader() {
-    return (
-      <CalenderHeadrer
-        allWeeks={ this.props.allWeeks }
-        animate={ this.props.animate }
-      />
-    );
   }
 
 

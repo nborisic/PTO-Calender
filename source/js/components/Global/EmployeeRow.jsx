@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 
-const ANIMATION_DURAION = 2000;
+const ANIMATION_DURAION = 500;
 
 
 export default class EmplyeeRow extends Component {
@@ -12,7 +12,6 @@ export default class EmplyeeRow extends Component {
     animate: PropTypes.string,
     employeeName: PropTypes.string,
     oneEmployee: PropTypes.object,
-    first: PropTypes.bool,
   }
 
   constructor() {
@@ -52,7 +51,6 @@ export default class EmplyeeRow extends Component {
     const weekDays = [];
     const weekClass = this.props.animate ? 'animateClass' : 'weekContainer';
     this.props.allWeeks.map((oneWeek, index) => {
-      const monthClass = this.props.first ? 'month' : 'invisible';
       const oneWeekDay = [];
 
       for (let i = 0; i < 5; i++) {
@@ -77,9 +75,6 @@ export default class EmplyeeRow extends Component {
     } else if (this.props.animate === 'right') {
       transform = 'translateX(-66.66666%)';
     }
-
-
-    // console.log(this.props.oneEmployee);
 
     return (
       <div className='employeeContainer'>

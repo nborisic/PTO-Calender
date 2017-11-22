@@ -1,5 +1,6 @@
 $font-family-serif: Garamond, "Times New Roman", serif;
-$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-sans-serif: "Helvetica", Helvetica, Arial, sans-serif;
+$circle-font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 $grey-border: #eee;
 $grey-text: #aaa;
@@ -80,7 +81,7 @@ button:disabled {
 // }
 
 .Page {
-  // max-width: 60rem;
+  max-width: 1280px;
   margin: 0 auto;
 
   // @include lg {
@@ -90,17 +91,20 @@ button:disabled {
 
 
 .circle {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  height: 3rem;
-  width: 3rem;
+  height: 30px;
+  width: 30px;
   border-radius: 50%;
-  margin: 5px;
+
+  font-size: 16px;
+  font-family: $circle-font-family-sans-serif;
 }
 
 .redCircle {
   background-color: red;
+  color: white;
 }
 
 .blueCircle {
@@ -131,6 +135,7 @@ button:disabled {
 
 .oneWeek {
   display: flex;
+  width: 100%;
   justify-content: space-around;
 }
 
@@ -140,6 +145,9 @@ button:disabled {
 }
 
 .weekContainer {
+  display: flex;
+  align-items: center;
+  padding: 5px 6px 12px 6px;
   border-left: 1px solid black;
   &:nth-child(4n + 1) {
     border-left-color: transparent;
@@ -148,8 +156,9 @@ button:disabled {
 
 
 .animateClass {
+ @extend .weekContainer;
   border-left: 1px solid black;
-  justify-content: space-around;
+
 }
 
 .overflow {
@@ -258,14 +267,17 @@ button:disabled {
     background-image: url(../assets/img/rightHover.svg);
   }
   background-image: url(../assets/img/right.svg);
-  margin-left: 20px;
+  margin-left: 10px;
   height: 30px;
   width: 30px;
 }
 
 .leftButton {
   @extend .rightButton;
-  transform: rotate(180deg);
+  transform: scale(-1, 1);
+}
+
+.buttonGroup {
 }
 
 .employeeContainer {
@@ -274,12 +286,19 @@ button:disabled {
 }
 
 .employeeInfo {
-  width: 30%;
   display: flex;
-
+  flex-grow: 1;
+  flex-shrink: 0;
+  width: 22.5%;
+  padding: 5px 0 12px 0;
+  font-size: 21px;
   >span {
     margin-left: 10px;
     align-self: center;
+  }
+  >img {
+    height: 50px;
+    width: 50px;
   }
 }
 
@@ -295,13 +314,14 @@ button:disabled {
 .hedder {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .calendarTable {
-  margin-top: 80px;
+  margin-top: 40px;
 }
 
-.month {
-//  position: absolute;
-  top: -40px;
+.monthContainer {
+  margin: 0 0 25px 19px;
+  font-size: 39px;
 }

@@ -10,7 +10,7 @@ import Andy from '../../../assets/img/Andy_01.png';
 import Chris from '../../../assets/img/Chris_Alden.png';
 
 
-const ANIMATION_DURAION = 2000;
+const ANIMATION_DURAION = 500;
 
 
 const employeeObj = {
@@ -125,7 +125,6 @@ export default class Test extends Component {
   render() {
     return (
       <div className='Dashboard'>
-        <div>Wellcome to Dashboard!</div>
         <div className='hedder'>
           <div className='logoGroup'>
             <img

@@ -8,7 +8,7 @@ export default class ScrollButtons extends Component {
 
   render() {
     return (
-      <div>
+      <div className='buttonGroup'>
         <button
           className='leftButton'
           onClick={ () => { this.props.scrollClick(-1); } }

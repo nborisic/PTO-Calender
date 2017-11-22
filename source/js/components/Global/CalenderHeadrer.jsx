@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 
 
-const ANIMATION_DURAION = 2000;
+const ANIMATION_DURAION = 500;
 
 
 export default class EmplyeeRow extends Component {
