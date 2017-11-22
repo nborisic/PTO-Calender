@@ -107,32 +107,47 @@ button:disabled {
   background-color: blue;
 }
 
-.weekContainer {
+
+
+.daysRow {
+  position: relative;
+  width: 300%;
+  flex-wrap: wrap;
+  display: flex;
+  height: 100%;
+}
+
+.viewContainer {
   width: 100%;
   overflow: hidden;
   border-right: 1px solid black;
   border-left: 1px solid black;
 }
 
-.daysRow {
-  width: 300%;
-  flex-wrap: wrap;
-  display: flex;
-  height: 100%
+.headerViewContainer {
+  @extend .viewContainer;
+  border: none;
 }
 
 .oneWeek {
   display: flex;
-  border-left: 1px solid black;
   justify-content: space-around;
+}
 
+.monthContainer {
+  display: flex;
+  padding-left: 2px;
+}
+
+.weekContainer {
+  border-left: 1px solid black;
   &:nth-child(4n + 1) {
     border-left-color: transparent;
   }
 }
 
+
 .animateClass {
-  display: flex;
   border-left: 1px solid black;
   justify-content: space-around;
 }
@@ -254,12 +269,14 @@ button:disabled {
 }
 
 .employeeContainer {
+  position: relative;
   display: flex;
 }
 
 .employeeInfo {
   width: 30%;
   display: flex;
+
   >span {
     margin-left: 10px;
     align-self: center;
@@ -282,4 +299,9 @@ button:disabled {
 
 .calendarTable {
   margin-top: 80px;
+}
+
+.month {
+//  position: absolute;
+  top: -40px;
 }

@@ -12,6 +12,7 @@ export default class EmplyeeRow extends Component {
     animate: PropTypes.string,
     employeeName: PropTypes.string,
     oneEmployee: PropTypes.object,
+    first: PropTypes.bool,
   }
 
   constructor() {
@@ -49,14 +50,20 @@ export default class EmplyeeRow extends Component {
 
   renderDates() {
     const weekDays = [];
-    const weekClass = this.props.animate ? 'animateClass' : 'oneWeek';
+    const weekClass = this.props.animate ? 'animateClass' : 'weekContainer';
     this.props.allWeeks.map((oneWeek, index) => {
+      const monthClass = this.props.first ? 'month' : 'invisible';
       const oneWeekDay = [];
+
       for (let i = 0; i < 5; i++) {
         const oneDayStyle = this.state.ptoDays.includes(oneWeek[i].format('MM/DD/YYYY')) ? 'redCircle' : '';
         oneWeekDay.push(<div className={ `circle ${ oneDayStyle }` } key={ `${ index }/${ i }` } >{ oneWeek[i].format('D') }</div>);
       }
-      weekDays.push(<div className={ weekClass } key={ index } style={ { width: '8.33333333%' } }>{ oneWeekDay }</div>);
+      weekDays.push(
+        <div className={ weekClass } key={ index } style={ { width: '8.33333333%' } }>
+          <div className='oneWeek'>{ oneWeekDay }</div>
+        </div>
+      );
       return true;
     });
     return weekDays;
@@ -83,7 +90,7 @@ export default class EmplyeeRow extends Component {
           />
           <span>{ employeeName }</span>
         </div>
-        <div className='weekContainer'>
+        <div className='viewContainer'>
           <div
             className='daysRow'
             style={ {
