@@ -25,7 +25,7 @@ export default class FilterGroup extends Component {
 
   setDropdownItem(e) {
     const newElement = (
-      <div
+      <span
         className='elementDiv'
         key={ e.target.value }
       >
@@ -33,9 +33,9 @@ export default class FilterGroup extends Component {
         <button
           value={ e.target.value }
           onClick={ this.deleteElement }
-        >x
+        >
         </button>
-      </div>);
+      </span>);
     const buttonsArray = this.state.buttonsArray;
     buttonsArray.push(newElement);
     this.setState({
@@ -79,6 +79,7 @@ export default class FilterGroup extends Component {
 
     return (
       <div className='FilterGroup'>
+        <span>Filter by:</span>
         { this.state.buttonsArray }
         <button
           className={ buttonClass }
@@ -97,9 +98,11 @@ export default class FilterGroup extends Component {
             />
           </div>
           <div className={ this.state.inputValue ? 'dropMenu' : 'invisible' }>
-            <button className='filterButton' onClick={ this.setDropdownItem } value='1'>1</button>
-            <button className='filterButton' onClick={ this.setDropdownItem } value='2'>2</button>
-            <button className='filterButton' onClick={ this.setDropdownItem } value='3'>3</button>
+            <button className='filterButton' onClick={ this.setDropdownItem } value='Apple - C3PO Content Strategy'>Apple - C3PO Content Strategy</button>
+            <button className='filterButton' onClick={ this.setDropdownItem } value='Apple - Corporate Events'>Apple - Corporate Events</button>
+            <button className='filterButton' onClick={ this.setDropdownItem } value='Apple - Future of Retail'>Apple - Future of Retail</button>
+            <button className='filterButton' onClick={ this.setDropdownItem } value='Apple - Wall 2.0'>Apple - Wall 2.0</button>
+
           </div>
         </div>
       </div>

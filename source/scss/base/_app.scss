@@ -1,6 +1,6 @@
 $font-family-serif: Garamond, "Times New Roman", serif;
 $font-family-sans-serif: "Helvetica", Helvetica, Arial, sans-serif;
-$circle-font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$newHelvetica-font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 $grey-border: #eee;
 $grey-text: #aaa;
@@ -99,18 +99,14 @@ button:disabled {
   border-radius: 50%;
 
   font-size: 16px;
-  font-family: $circle-font-family-sans-serif;
+  font-family: $newHelvetica-font-family-sans-serif;
 }
 
 .redCircle {
   background-color: red;
   color: white;
+  //font-weight: 500;
 }
-
-.blueCircle {
-  background-color: blue;
-}
-
 
 
 .daysRow {
@@ -124,8 +120,8 @@ button:disabled {
 .viewContainer {
   width: 100%;
   overflow: hidden;
-  border-right: 1px solid black;
-  border-left: 1px solid black;
+  border-right: 1px solid #E2E2E2;
+  border-left: 1px solid #E2E2E2;
 }
 
 .headerViewContainer {
@@ -148,7 +144,7 @@ button:disabled {
   display: flex;
   align-items: center;
   padding: 5px 6px 12px 6px;
-  border-left: 1px solid black;
+  border-left: 1px solid #E2E2E2;
   &:nth-child(4n + 1) {
     border-left-color: transparent;
   }
@@ -157,105 +153,117 @@ button:disabled {
 
 .animateClass {
  @extend .weekContainer;
-  border-left: 1px solid black;
+  border-left: 1px solid $black;
 
-}
-
-.overflow {
-  overflow: scroll;
-  height: 100px;
-  width: 100px;
-  box-shadow: 10px 10px 5px #888888;
-}
-
-.item {
-  height: 25px;
-}
-
-.addFilter {
-  &:hover {
-    background-image: url(../assets/img/filterButtonHover.svg);
-  }
-  background-image: url(../assets/img/filterButton.svg);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border: none;
-  outline: none;
-  display: flex;
-  width: 30px;
-  height: 30px;
-}
-
-.rotate {
-  @extend .addFilter;
-  transform: rotate(45deg);
-  transition: transform 1s;
-}
-
-.filterInput {
-  &::placeholder {
-    color: grey;
-  }
-  animation: slideIn 1s ease;
-  outline: none;
-  border: none;
-  margin-top: 10px;
-  border-bottom: 1px solid black;
-  width: 18em;
-  &:focus {
-    border: none;
-    border-bottom: 2px solid red;
-  }
-}
-@keyframes slideIn {
-  0%   { transform: translateX(-18em);}
-  100% { transform: translateX(0em); }
 }
 
 .invisible {
   display: none;
 }
 
-.filterDrop {
+.FilterGroup {
   display: flex;
-  flex-direction: column;
-}
-
-.dropMenu {
-  position: absolute;
-  margin-top: 35px;
-  z-index: 1;
-  background-color: white;
-  border: 1px solid gray;
-  border-top: none;
-  width: 18em;
-  border-radius: 0 0 10px 10px;
-  padding: 10px 0;
-  max-height: 96px;
-  overflow: scroll;
-  button {
-    height: 25px;
-    width: 100%;
-    border: none;
+  margin-left: 37px;
+  >span {
+    align-self: center;
+    margin-right: 10px;
+    font-size: 14px;
+    font-family: $newHelvetica-font-family-sans-serif;
+  }
+  .elementDiv {
+    padding: 8px 9px 9px 16px;
+    border-radius: 4px;
+    border: 1px solid #D0D0D0;
+  //  box-shadow: 0 2px 4px rgba(0, 0, 0, .5), inset 0 1px 3px rgba(0, 0, 0, .5);
+    >span {
+      font-size: 14px;
+      margin-right: 30px;
+    }
+    >button {
+      outline: none;
+      border: none;
+      height: 14px;
+      background-image: url(../assets/img/x_symbol.svg);
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+  }
+  .addFilter {
     &:hover {
-      background-color: gray;
+      background-image: url(../assets/img/filterButtonHover.svg);
+    }
+    align-self: center;
+    background-image: url(../assets/img/filterButton.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+    outline: none;
+    width: 27px;
+    height: 27px;
+  }
+  .rotate {
+    @extend .addFilter;
+    transform: rotate(45deg);
+    transition: transform 1s;
+  }
+  .filterDrop {
+    align-self: center;
+    flex-direction: column;
+    .filterInput {
+      &::placeholder {
+        color: $black;
+      }
+      animation: slideIn 1s ease;
+      outline: none;
+      border: none;
+      margin-left: 10px;
+      font-size: 19px;
+      border-bottom: 1px solid $black;
+      width: 18em;
+      &:focus {
+        border: none;
+        border-bottom: 1px solid #EC1C24;
+      }
+    }
+    @keyframes slideIn {
+      0%   { transform: translateX(-18em);}
+      100% { transform: translateX(0em); }
+    }
+    .dropMenu {
+      position: absolute;
+      z-index: 1;
+      margin-left: 10px;
+      background-color: $white;
+      border: 1px solid rgba(0, 0, 0, .12);
+      border-top: none;
+      font-size: 19px;
+      width: 18em;
+      border-radius: 0 0 4px 4px;
+      padding: 10px 0;
+      box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .13);
+      max-height: 200px;
+      overflow: scroll;
+      .filterButton {
+        width: 100%;
+        text-align: start;
+        padding: 0;
+        padding: 9px 39px 12px 26px;
+        border: none;
+        &:hover {
+          border-radius: 0;
+          background-color: #F1F1F1;
+        }
+      }
     }
   }
 }
 
-.elementDiv {
-  display: inline-flex;
-  width: auto;
-  border: 0.5px solid grey;
-  padding: 5px;
-  border-radius: 3px;
-  height: 1.8em;
-  button {
-    outline: none;
-    border: none;
-  }
-}
+
+
+
+
+
 
 .rightButton {
   border: none;
@@ -306,10 +314,7 @@ button:disabled {
   display: flex;
 }
 
-.FilterGroup {
-  display: flex;
-  align-self: center;
-}
+
 
 .hedder {
   display: flex;
