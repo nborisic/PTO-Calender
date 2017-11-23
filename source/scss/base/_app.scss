@@ -83,6 +83,9 @@ button:disabled {
 .Page {
   max-width: 1280px;
   margin: 0 auto;
+  @include md {
+    max-width: 320px;
+  };
 
   // @include lg {
   //   margin: 0 0 0 20rem;
@@ -116,6 +119,9 @@ button:disabled {
   overflow: hidden;
   border-right: 1px solid #E2E2E2;
   border-left: 1px solid #E2E2E2;
+  @include md {
+    border: transparent;
+  };
 }
 
 
@@ -129,6 +135,12 @@ button:disabled {
 .monthContainer {
   display: flex;
   padding-left: 2px;
+  margin: 0 0 25px 19px;
+  font-size: 39px;
+  @include md {
+    font-size: 51px;
+    margin-left: 0;
+  };
 }
 
 .weekContainer {
@@ -136,6 +148,10 @@ button:disabled {
   align-items: center;
   padding: 5px 6px 12px 6px;
   border-left: 1px solid #E2E2E2;
+  @include md {
+    border-left: none;
+    padding: 5px 0 12px 0;
+  };
   &:nth-child(4n + 1) {
     border-left-color: transparent;
   }
@@ -145,7 +161,9 @@ button:disabled {
 .animateClass {
  @extend .weekContainer;
   border-left: 1px solid $black;
-
+  @include md {
+    border: transparent;
+  };
 }
 
 .invisible {
@@ -289,6 +307,10 @@ button:disabled {
     width: 22.5%;
     padding: 5px 0 12px 0;
     font-size: 21px;
+    @include md {
+      font-size: 16px;
+      width: 45%;
+    };
     >span {
       margin-left: 10px;
       align-self: center;
@@ -302,6 +324,13 @@ button:disabled {
     @extend .viewContainer;
     border: none;
   }
+}
+
+.monthToggleDiv {
+  @extend .employeeInfo;
+  @include md {
+   display: none !important;
+  };
 }
 
 .daysRow {
@@ -327,9 +356,4 @@ button:disabled {
 
 .calendarTable {
   margin-top: 40px;
-}
-
-.monthContainer {
-  margin: 0 0 25px 19px;
-  font-size: 39px;
 }

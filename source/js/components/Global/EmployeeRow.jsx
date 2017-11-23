@@ -71,7 +71,7 @@ export default class EmplyeeRow extends Component {
   }
 
   render() {
-    const { employeeName, oneEmployee, animate } = this.props;
+    const { employeeName, oneEmployee, animate, breakpoint } = this.props;
     let transform = `translateX(-${ 100 / 3 }%)`;
     if (animate === 'left') {
       transform = 'translateX(0)';
@@ -83,6 +83,7 @@ export default class EmplyeeRow extends Component {
       <div className='employeeContainer'>
         <div className='employeeInfo'>
           <img
+            className={ breakpoint === 'mobile' ? 'invisible' : '' }
             src={ oneEmployee.src }
             alt={ employeeName }
           />

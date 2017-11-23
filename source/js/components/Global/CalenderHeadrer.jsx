@@ -12,15 +12,35 @@ export default class EmplyeeRow extends Component {
     breakpoint: PropTypes.string,
   }
 
+  constructor() {
+    super();
 
-  renderDates() {
-    const { breakpoint, allWeeks } = this.props;
+    this.state = {
+      months: [],
+      monthArray: [],
+    };
+
+    this.renderDates = this.renderDates.bind(this);
+  }
+
+  componentWillMount() {
+    this.renderDates(this.props.allWeeks, this.props.breakpoint);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.renderDates(nextProps.allWeeks, nextProps.breakpoint);
+  }
+
+  renderDates(allWeeks, breakpoint) {
     const weekDays = [];
+    const monthArray = [];
     const containerWidth = breakpoint === 'mobile' ? 100 / 3 : 100 / 12;
+  //  const monthClass = breakpoint === 'mobile' ? 'monthContainerMobile' : 'monthContainer';
     allWeeks.map((oneWeek, index) => {
       const oneWeekDay = [];
       let setOnFour;
       if (breakpoint === 'mobile' || /^[1-7]$/.test(oneWeek[0].format('D'))) {
+        monthArray.push(oneWeek[0].format('MMM'));
         oneWeekDay.push(<div key={ `${ index }` } >{ oneWeek[0].format('MMM') }</div>);
         if (index === 4) {
           setOnFour = true;
@@ -37,21 +57,31 @@ export default class EmplyeeRow extends Component {
       );
       return true;
     });
-    return weekDays;
+    this.setState({
+      monthArray,
+      months: weekDays,
+    });
   }
 
   render() {
+    const { monthArray } = this.state;
+    const { animate, breakpoint } = this.props;
     let transform = `translateX(-${ 100 / 3 }%)`;
-    if (this.props.animate === 'left') {
+    if (animate === 'left') {
       transform = 'translateX(0)';
-    } else if (this.props.animate === 'right') {
+      if (breakpoint === 'mobile') {
+        transform = monthArray[1] === monthArray[0] ? `translateX(-${ 100 / 3 }%)` : transform;
+      }
+    } else if (animate === 'right') {
       transform = `translateX(-${ (2 / 3) * 100 }%)`;
+      if (breakpoint === 'mobile') {
+        transform = monthArray[1] === monthArray[2] ? `translateX(-${ 100 / 3 }%)` : transform;
+      }
     }
-
 
     return (
       <div className='employeeContainer'>
-        <div className='employeeInfo' />
+        <div className='monthToggleDiv' />
         <div className='headerViewContainer'>
           <div
             className='daysRow'
@@ -60,7 +90,7 @@ export default class EmplyeeRow extends Component {
               transition: this.props.animate ? `transform ${ ANIMATION_DURAION }ms ease-in-out` : null,
             } }
           >
-            {this.renderDates()}
+            {this.state.months}
           </div>
         </div>
       </div>
