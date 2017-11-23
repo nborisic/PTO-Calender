@@ -4,6 +4,7 @@ import {
   TEST_ASYNC_ACTION_START,
   TEST_ASYNC_ACTION_ERROR,
   TEST_ASYNC_ACTION_SUCCESS,
+  SCREEEN_SIZE,
 } from 'actions/app';
 
 const initialState = Map({
@@ -32,6 +33,11 @@ const actionsMap = {
     return state.merge(Map({
       asyncLoading: false,
       asyncData: action.data,
+    }));
+  },
+  [SCREEEN_SIZE]: (state, action) => {
+    return state.merge(Map({
+      breakpoint: action.screenSize,
     }));
   },
 };

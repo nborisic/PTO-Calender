@@ -109,13 +109,7 @@ button:disabled {
 }
 
 
-.daysRow {
-  position: relative;
-  width: 300%;
-  flex-wrap: wrap;
-  display: flex;
-  height: 100%;
-}
+
 
 .viewContainer {
   width: 100%;
@@ -124,10 +118,7 @@ button:disabled {
   border-left: 1px solid #E2E2E2;
 }
 
-.headerViewContainer {
-  @extend .viewContainer;
-  border: none;
-}
+
 
 .oneWeek {
   display: flex;
@@ -291,24 +282,36 @@ button:disabled {
 .employeeContainer {
   position: relative;
   display: flex;
+  .employeeInfo {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    width: 22.5%;
+    padding: 5px 0 12px 0;
+    font-size: 21px;
+    >span {
+      margin-left: 10px;
+      align-self: center;
+    }
+    >img {
+      height: 50px;
+      width: 50px;
+    }
+  }
+  .headerViewContainer {
+    @extend .viewContainer;
+    border: none;
+  }
 }
 
-.employeeInfo {
+.daysRow {
+  position: relative;
+  width: 300%;
+  flex-wrap: wrap;
   display: flex;
-  flex-grow: 1;
-  flex-shrink: 0;
-  width: 22.5%;
-  padding: 5px 0 12px 0;
-  font-size: 21px;
-  >span {
-    margin-left: 10px;
-    align-self: center;
-  }
-  >img {
-    height: 50px;
-    width: 50px;
-  }
+  height: 100%;
 }
+
 
 .logoGroup {
   display: flex;
