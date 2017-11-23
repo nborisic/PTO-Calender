@@ -5,6 +5,7 @@ import moment from 'moment';
 import FilterGroup from 'components/Global/FilterGroup';
 import CalendarSlider from 'components/Global/CalendarSlider';
 import ScrollButtons from 'components/Global/ScrollButtons';
+import breakpoint from 'decorators/breakpoint';
 import workAndCoLogoImg from '../../../assets/img/workco-logo.svg';
 import Andy from '../../../assets/img/Andy_01.png';
 import Chris from '../../../assets/img/Chris_Alden.png';
@@ -50,9 +51,13 @@ const employeeObj = {
   },
 };
 
-@connect()
+@breakpoint
+@connect(state => ({
+  breakpoint: state.app.get('breakpoint'),
+}))
 export default class Test extends Component {
   static propTypes = {
+    breakpoint: PropTypes.string,
     dispatch: PropTypes.func,
   }
 
@@ -70,15 +75,20 @@ export default class Test extends Component {
   }
 
   componentWillMount() {
-    this.getDates();
+    this.getDates(this.props.breakpoint);
   }
 
-  getDates() {
+  componentWillReceiveProps(nextProps) {
+    this.getDates(nextProps.breakpoint);
+  }
+
+  getDates(breakpointSize) {
     const { weeksToJump, startWeek } = this.state;
+    const weekToModify = breakpointSize === 'mobile' ? 1 : 4;
     // izdvajanje datuma
     const allWeeks = [];
     let weekStart;
-    let calendarStart = startWeek || moment().subtract(4, 'week').startOf('isoWeek');
+    let calendarStart = startWeek || moment().subtract(weekToModify, 'week').startOf('isoWeek');
     if (this.state.weeksToJump > 0) {
       calendarStart = calendarStart.add(weeksToJump, 'week')
       .startOf('isoWeek');
@@ -86,7 +96,8 @@ export default class Test extends Component {
       calendarStart = calendarStart.subtract(Math.abs(weeksToJump), 'week')
       .startOf('isoWeek');
     }
-    for (let k = 0; k < 12; k++) {
+    const weeksToIterate = breakpointSize === 'mobile' ? 3 : 12;
+    for (let k = 0; k < weeksToIterate; k++) {
       weekStart = calendarStart.clone().add(k, 'week');
       const oneWeek = [];
       oneWeek.push(weekStart);
@@ -111,13 +122,13 @@ export default class Test extends Component {
     this.setState({
       animate: number < 0 ? 'left' : 'right',
     });
-
+    const offsetNo = this.props.breakpoint === 'mobile' ? 1 : 4;
     setTimeout(() => {
       this.setState({
         animate: null,
-        weeksToJump: 4 * number,
+        weeksToJump: offsetNo * number,
       }, () => {
-        this.getDates();
+        this.getDates(this.props.breakpoint);
       });
     }, ANIMATION_DURAION);
   }

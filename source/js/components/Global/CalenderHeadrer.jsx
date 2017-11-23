@@ -9,15 +9,18 @@ export default class EmplyeeRow extends Component {
   static propTypes = {
     allWeeks: PropTypes.array,
     animate: PropTypes.string,
+    breakpoint: PropTypes.string,
   }
 
 
   renderDates() {
+    const { breakpoint, allWeeks } = this.props;
     const weekDays = [];
-    this.props.allWeeks.map((oneWeek, index) => {
+    const containerWidth = breakpoint === 'mobile' ? 100 / 3 : 100 / 12;
+    allWeeks.map((oneWeek, index) => {
       const oneWeekDay = [];
       let setOnFour;
-      if (/^[1-7]$/.test(oneWeek[0].format('D'))) {
+      if (breakpoint === 'mobile' || /^[1-7]$/.test(oneWeek[0].format('D'))) {
         oneWeekDay.push(<div key={ `${ index }` } >{ oneWeek[0].format('MMM') }</div>);
         if (index === 4) {
           setOnFour = true;
@@ -28,7 +31,7 @@ export default class EmplyeeRow extends Component {
         !setOnFour ? oneWeekDay.push(<div key={ `jump${ index }` } >{ oneWeek[0].format('MMM') }</div>) : '';
       }
       weekDays.push(
-        <div key={ index } style={ { width: '8.33333333%' } }>
+        <div key={ index } style={ { width: `${ containerWidth }%` } }>
           <div className='monthContainer'>{ oneWeekDay }</div>
         </div>
       );
@@ -42,7 +45,7 @@ export default class EmplyeeRow extends Component {
     if (this.props.animate === 'left') {
       transform = 'translateX(0)';
     } else if (this.props.animate === 'right') {
-      transform = 'translateX(-66.66666%)';
+      transform = `translateX(-${ (2 / 3) * 100 }%)`;
     }
 
 

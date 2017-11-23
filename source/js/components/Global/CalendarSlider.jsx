@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import EmployeeRow from 'components/Global/EmployeeRow';
 import CalenderHeadrer from 'components/Global/CalenderHeadrer';
-import breakpoint from 'decorators/breakpoint';
 
-@breakpoint
+
+@connect(state => ({
+  breakpoint: state.app.get('breakpoint'),
+}))
 export default class CalendarSlider extends Component {
   static propTypes = {
     allEmployees: PropTypes.object,
     animate: PropTypes.string,
     allWeeks: PropTypes.array,
+    breakpoint: PropTypes.string,
   }
 
   constructor() {
@@ -31,6 +35,7 @@ export default class CalendarSlider extends Component {
           oneEmployee={ allEmployees[allEmployeesKeys[i]] }
           animate={ this.props.animate }
           allWeeks={ this.props.allWeeks }
+          breakpoint={ this.props.breakpoint }
         />
       );
     }
@@ -42,6 +47,7 @@ export default class CalendarSlider extends Component {
     return (
       <div className='calendarTable'>
         <CalenderHeadrer
+          breakpoint={ this.props.breakpoint }
           allWeeks={ this.props.allWeeks }
           animate={ this.props.animate }
         />

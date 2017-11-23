@@ -12,6 +12,7 @@ export default class EmplyeeRow extends Component {
     animate: PropTypes.string,
     employeeName: PropTypes.string,
     oneEmployee: PropTypes.object,
+    breakpoint: PropTypes.string,
   }
 
   constructor() {
@@ -48,9 +49,11 @@ export default class EmplyeeRow extends Component {
   }
 
   renderDates() {
+    const { animate, breakpoint, allWeeks } = this.props;
     const weekDays = [];
-    const weekClass = this.props.animate ? 'animateClass' : 'weekContainer';
-    this.props.allWeeks.map((oneWeek, index) => {
+    const weekClass = animate ? 'animateClass' : 'weekContainer';
+    const containerWidth = breakpoint === 'mobile' ? 100 / 3 : 100 / 12;
+    allWeeks.map((oneWeek, index) => {
       const oneWeekDay = [];
 
       for (let i = 0; i < 5; i++) {
@@ -58,7 +61,7 @@ export default class EmplyeeRow extends Component {
         oneWeekDay.push(<div className={ `circle ${ oneDayStyle }` } key={ `${ index }/${ i }` } >{ oneWeek[i].format('D') }</div>);
       }
       weekDays.push(
-        <div className={ weekClass } key={ index } style={ { width: '8.33333333%' } }>
+        <div className={ weekClass } key={ index } style={ { width: `${ containerWidth }%` } }>
           <div className='oneWeek'>{ oneWeekDay }</div>
         </div>
       );
@@ -68,12 +71,12 @@ export default class EmplyeeRow extends Component {
   }
 
   render() {
-    const { employeeName, oneEmployee } = this.props;
+    const { employeeName, oneEmployee, animate } = this.props;
     let transform = `translateX(-${ 100 / 3 }%)`;
-    if (this.props.animate === 'left') {
+    if (animate === 'left') {
       transform = 'translateX(0)';
-    } else if (this.props.animate === 'right') {
-      transform = 'translateX(-66.66666%)';
+    } else if (animate === 'right') {
+      transform = `translateX(-${ (2 / 3) * 100 }%)`;
     }
 
     return (
