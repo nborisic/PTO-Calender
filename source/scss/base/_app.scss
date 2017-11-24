@@ -83,13 +83,6 @@ button:disabled {
 .Page {
   max-width: 1280px;
   margin: 0 auto;
-  @include md {
-    max-width: 320px;
-  };
-
-  // @include lg {
-  //   margin: 0 0 0 20rem;
-  // }
 }
 
 
@@ -130,6 +123,9 @@ button:disabled {
   display: flex;
   width: 100%;
   justify-content: space-around;
+  @include md {
+    justify-content: space-between;
+  };
 }
 
 .monthContainer {
@@ -170,15 +166,35 @@ button:disabled {
   display: none;
 }
 
+.wideScreenScrollButtons {
+  display: flex;
+  flex-shrink: 0;
+  @include md {
+    display: none;
+  };
+}
+.mobileScreenScrollButtons {
+  display: none;
+  @include md {
+    display: flex;
+    flex-shrink: 0;
+  };
+}
 .logoGroup {
   >img {
     display: flex;
     align-self: baseline;
   }
+  @include md {
+    display: block;
+  };
 }
 .filterGroup {
   display: flex;
   margin-left: 37px;
+  @include md {
+    margin: 35px 0 0 0;
+  };
   >span {
     //align-self: center;
     flex-shrink: 0;
@@ -187,6 +203,9 @@ button:disabled {
     font-size: 14px;
     font-family: $newHelvetica-font-family-sans-serif;
   }
+  @include md {
+    display: block;
+  };
   .buttons {
     display: flex;
   //  align-self: center;
@@ -241,7 +260,6 @@ button:disabled {
   }
   .filterDrop {
     align-self: center;
-    flex-direction: column;
     .filterInput {
       &::placeholder {
         color: $black;
@@ -251,6 +269,9 @@ button:disabled {
       border: none;
       margin-left: 10px;
       font-size: 19px;
+      @include md {
+        font-size: 14px;
+      };
       border-bottom: 1px solid $black;
       width: 18em;
       &:focus {
@@ -276,6 +297,9 @@ button:disabled {
       box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .13);
       max-height: 200px;
       overflow: scroll;
+      @include md {
+        font-size: 14px;
+      };
       .filterButton {
         width: 100%;
         text-align: start;
@@ -321,11 +345,16 @@ button:disabled {
   flex-shrink: 0;
   align-self: baseline;
   margin-top: 10px;
+  @include md {
+    align-self: center;
+    margin: 0px;
+  };
 }
 
 .employeeContainer {
   position: relative;
   display: flex;
+  width: 100%;
   .employeeInfo {
     display: flex;
     flex-grow: 1;
@@ -370,14 +399,19 @@ button:disabled {
 
 .logoGroup {
   display: flex;
+  @include md {
+    display: block;
+  };
 }
-
-
 
 .hedder {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+
+}
+.calendarHedder {
+  display: flex;
+  justify-content: space-between;
 }
 
 .calendarTable {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import EmployeeRow from 'components/Global/EmployeeRow';
 import CalenderHeadrer from 'components/Global/CalenderHeadrer';
+import ScrollButtons from 'components/Global/ScrollButtons';
 
 
 @connect(state => ({
@@ -14,6 +15,7 @@ export default class CalendarSlider extends Component {
     animate: PropTypes.string,
     allWeeks: PropTypes.array,
     breakpoint: PropTypes.string,
+    scrollFunction: PropTypes.func,
   }
 
   constructor() {
@@ -46,11 +48,18 @@ export default class CalendarSlider extends Component {
   render() {
     return (
       <div className='calendarTable'>
-        <CalenderHeadrer
-          breakpoint={ this.props.breakpoint }
-          allWeeks={ this.props.allWeeks }
-          animate={ this.props.animate }
-        />
+        <div className='calendarHedder'>
+          <CalenderHeadrer
+            breakpoint={ this.props.breakpoint }
+            allWeeks={ this.props.allWeeks }
+            animate={ this.props.animate }
+          />
+          <div className='mobileScreenScrollButtons'>
+            <ScrollButtons
+              scrollClick={ this.props.scrollFunction }
+            />
+          </div>
+        </div>
         { this.renderRows() }
       </div>
     );

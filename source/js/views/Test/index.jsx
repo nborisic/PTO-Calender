@@ -21,16 +21,21 @@ const employeeObj = {
     discipline: 'Technology',
     src: `${ Andy }`,
     pto: [
-      { start: '11/22/2017',
-        end: '11/30/2017' },
-      { start: '12/10/2017',
-        end: '12/12/2017' },
-      { start: '02/01/2018',
-        end: '02/05/2018' },
-    ],
-    remote: [
-      { start: '12/05/2017',
-        end: '12/05/2017' },
+      {
+        start: '11/22/2017',
+        end: '11/30/2017',
+        type: 'vacation',
+      },
+      {
+        start: '12/10/2017',
+        end: '12/12/2017',
+        type: 'sick',
+      },
+      {
+        start: '02/01/2018',
+        end: '02/05/2018',
+        type: 'parental-leave',
+      },
     ],
   },
   'Chris Alden': {
@@ -144,14 +149,17 @@ export default class Test extends Component {
             />
             <FilterGroup />
           </div>
-          <ScrollButtons
-            scrollClick={ this.offsetCalendar }
-          />
+          <div className='wideScreenScrollButtons'>
+            <ScrollButtons
+              scrollClick={ this.offsetCalendar }
+            />
+          </div>
         </div>
         <CalendarSlider
           allEmployees={ employeeObj }
           animate={ this.state.animate }
           allWeeks={ this.state.allWeeks }
+          scrollFunction={ this.offsetCalendar }
         />
       </div>
     );
