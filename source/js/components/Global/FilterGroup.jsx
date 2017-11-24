@@ -31,10 +31,10 @@ export default class FilterGroup extends Component {
       >
         <span>{ e.target.value }</span>
         <button
+          className='filterButton'
           value={ e.target.value }
           onClick={ this.deleteElement }
-        >
-        </button>
+        />
       </span>);
     const buttonsArray = this.state.buttonsArray;
     buttonsArray.push(newElement);
@@ -78,31 +78,34 @@ export default class FilterGroup extends Component {
     const inputClass = this.state.click ? 'filterInput' : 'invisible';
 
     return (
-      <div className='FilterGroup'>
+      <div className='filterGroup'>
         <span>Filter by:</span>
-        { this.state.buttonsArray }
-        <button
-          className={ buttonClass }
-          onClick={ this.handleFilterClick }
-        />
-        <div className='filterDrop'>
-          <div style={ { overflow: 'hidden', display: 'inline-flex' } }>
-            <input
-              type='text'
-              onChange={ this.changeInput }
-              value={ this.state.inputValue }
-              onClick={ this.openDropdown }
-              className={ inputClass }
-              placeholder='Filter by project, discipline, or location'
-              ref={ (a) => { this.filterInput = a; } }
+        <div className='buttons'>
+          { this.state.buttonsArray }
+          <div className='searchGrop'>
+            <button
+              className={ buttonClass }
+              onClick={ this.handleFilterClick }
             />
-          </div>
-          <div className={ this.state.inputValue ? 'dropMenu' : 'invisible' }>
-            <button className='filterButton' onClick={ this.setDropdownItem } value='Apple - C3PO Content Strategy'>Apple - C3PO Content Strategy</button>
-            <button className='filterButton' onClick={ this.setDropdownItem } value='Apple - Corporate Events'>Apple - Corporate Events</button>
-            <button className='filterButton' onClick={ this.setDropdownItem } value='Apple - Future of Retail'>Apple - Future of Retail</button>
-            <button className='filterButton' onClick={ this.setDropdownItem } value='Apple - Wall 2.0'>Apple - Wall 2.0</button>
-
+            <div className='filterDrop'>
+              <div style={ { overflow: 'hidden', display: 'inline-flex' } }>
+                <input
+                  type='text'
+                  onChange={ this.changeInput }
+                  value={ this.state.inputValue }
+                  onClick={ this.openDropdown }
+                  className={ inputClass }
+                  placeholder='Filter by project, discipline, or location'
+                  ref={ (a) => { this.filterInput = a; } }
+                />
+              </div>
+              <div className={ this.state.inputValue ? 'dropMenu' : 'invisible' }>
+                <button className='filterButton' onClick={ this.setDropdownItem } value='Apple - C3PO Content Strategy'>Apple - C3PO Content Strategy</button>
+                <button className='filterButton' onClick={ this.setDropdownItem } value='Apple - Corporate Events'>Apple - Corporate Events</button>
+                <button className='filterButton' onClick={ this.setDropdownItem } value='Apple - Future of Retail'>Apple - Future of Retail</button>
+                <button className='filterButton' onClick={ this.setDropdownItem } value='Apple - Wall 2.0'>Apple - Wall 2.0</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
