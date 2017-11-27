@@ -6,63 +6,24 @@ import FilterGroup from 'components/Global/FilterGroup';
 import CalendarSlider from 'components/Global/CalendarSlider';
 import ScrollButtons from 'components/Global/ScrollButtons';
 import breakpoint from 'decorators/breakpoint';
+import { fetchUsers } from 'actions/app';
 import workAndCoLogoImg from '../../../assets/img/workco-logo.svg';
-import Andy from '../../../assets/img/Andy_01.png';
-import Chris from '../../../assets/img/Chris_Alden.png';
 
 
 const ANIMATION_DURAION = 500;
 
 
-const employeeObj = {
-  'Andy Baudoin': {
-    projects: ['Apple - C3PO Content Strategy'],
-    location: 'New York',
-    discipline: 'Technology',
-    src: `${ Andy }`,
-    pto: [
-      {
-        start: '11/22/2017',
-        end: '11/30/2017',
-        type: 'vacation',
-      },
-      {
-        start: '12/10/2017',
-        end: '12/12/2017',
-        type: 'sick',
-      },
-      {
-        start: '02/01/2018',
-        end: '02/05/2018',
-        type: 'parental-leave',
-      },
-    ],
-  },
-  'Chris Alden': {
-    projects: ['Apple - Future of Retail'],
-    location: 'New York',
-    discipline: 'Technology',
-    src: `${ Chris }`,
-    pto: [
-      { start: '11/23/2017',
-        end: '12/05/2017' },
-      { start: '12/22/2017',
-        end: '12/30/2017' },
-    ],
-    remote: [
-      { start: '12/06/2017',
-        end: '12/07/2017' },
-    ],
-  },
-};
-
 @breakpoint
 @connect(state => ({
   breakpoint: state.app.get('breakpoint'),
+  usersData: state.app.get('fetchUsersData'),
+  fetchUsersLoading: state.app.get('fetchUsersLoading'),
 }))
 export default class Test extends Component {
   static propTypes = {
     breakpoint: PropTypes.string,
+    usersData: PropTypes.array,
+    fetchUsersLoading: PropTypes.bool,
     dispatch: PropTypes.func,
   }
 
@@ -80,6 +41,8 @@ export default class Test extends Component {
   }
 
   componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(fetchUsers());
     this.getDates(this.props.breakpoint);
   }
 
@@ -139,6 +102,12 @@ export default class Test extends Component {
   }
 
   render() {
+    if (this.props.fetchUsersLoading) {
+      return (
+        <div style={ { fontSize: '35px' } }>Loading....</div>
+      );
+    }
+
     return (
       <div className='Dashboard'>
         <div className='hedder'>
@@ -156,7 +125,7 @@ export default class Test extends Component {
           </div>
         </div>
         <CalendarSlider
-          allEmployees={ employeeObj }
+          allEmployees={ this.props.usersData }
           animate={ this.state.animate }
           allWeeks={ this.state.allWeeks }
           scrollFunction={ this.offsetCalendar }

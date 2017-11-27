@@ -11,7 +11,7 @@ import ScrollButtons from 'components/Global/ScrollButtons';
 }))
 export default class CalendarSlider extends Component {
   static propTypes = {
-    allEmployees: PropTypes.object,
+    allEmployees: PropTypes.array,
     animate: PropTypes.string,
     allWeeks: PropTypes.array,
     breakpoint: PropTypes.string,
@@ -27,21 +27,20 @@ export default class CalendarSlider extends Component {
 
   renderRows() {
     const { allEmployees } = this.props;
-    const allEmployeesArray = [];
-    const allEmployeesKeys = Object.keys(allEmployees);
-    for (let i = 0; i < allEmployeesKeys.length; i++) {
-      allEmployeesArray.push(
-        <EmployeeRow
-          key={ allEmployeesKeys[i] }
-          employeeName={ allEmployeesKeys[i] }
-          oneEmployee={ allEmployees[allEmployeesKeys[i]] }
-          animate={ this.props.animate }
-          allWeeks={ this.props.allWeeks }
-          breakpoint={ this.props.breakpoint }
-        />
-      );
+    if (allEmployees) {
+      return allEmployees.map((employee, i) => {
+        return (
+          <EmployeeRow
+            key={ `employee${ i }` }
+            oneEmployee={ employee }
+            animate={ this.props.animate }
+            allWeeks={ this.props.allWeeks }
+            breakpoint={ this.props.breakpoint }
+          />
+        );
+      });
     }
-    return allEmployeesArray;
+    return true;
   }
 
 

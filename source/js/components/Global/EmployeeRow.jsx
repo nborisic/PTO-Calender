@@ -10,7 +10,6 @@ export default class EmplyeeRow extends Component {
   static propTypes = {
     allWeeks: PropTypes.array,
     animate: PropTypes.string,
-    employeeName: PropTypes.string,
     oneEmployee: PropTypes.object,
     breakpoint: PropTypes.string,
   }
@@ -71,7 +70,7 @@ export default class EmplyeeRow extends Component {
   }
 
   render() {
-    const { employeeName, oneEmployee, animate, breakpoint } = this.props;
+    const { oneEmployee, animate, breakpoint } = this.props;
     let transform = `translateX(-${ 100 / 3 }%)`;
     if (animate === 'left') {
       transform = 'translateX(0)';
@@ -85,9 +84,9 @@ export default class EmplyeeRow extends Component {
           <img
             className={ breakpoint === 'mobile' ? 'invisible' : '' }
             src={ oneEmployee.src }
-            alt={ employeeName }
+            alt={ oneEmployee.name }
           />
-          <span>{ employeeName }</span>
+          <span>{ oneEmployee.name }</span>
         </div>
         <div className='viewContainer'>
           <div
