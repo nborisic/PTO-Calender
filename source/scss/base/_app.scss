@@ -293,13 +293,20 @@ button:disabled {
       font-size: 19px;
       width: 18em;
       border-radius: 0 0 4px 4px;
-      padding: 10px 0;
+    //  padding: 10px 0;
       box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .13);
       max-height: 200px;
       overflow: scroll;
       @include md {
         font-size: 14px;
       };
+      .categoryClass {
+        font-size: 12px;
+        color: #7C7C7C;
+        padding: 22px 0px 11px 26px;
+        font-weight: 400;
+
+      }
       .filterButton {
         width: 100%;
         text-align: start;

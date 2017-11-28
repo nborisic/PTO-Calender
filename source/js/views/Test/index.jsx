@@ -116,7 +116,9 @@ export default class Test extends Component {
               src={ workAndCoLogoImg }
               alt='Work & Co logo'
             />
-            <FilterGroup />
+            <FilterGroup
+              usersData={ this.props.usersData }
+            />
           </div>
           <div className='wideScreenScrollButtons'>
             <ScrollButtons

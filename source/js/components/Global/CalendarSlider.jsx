@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import EmployeeRow from 'components/Global/EmployeeRow';
 import CalenderHeadrer from 'components/Global/CalenderHeadrer';
 import ScrollButtons from 'components/Global/ScrollButtons';
+import { sortEmployeesArray } from 'utils/global.js';
 
 
 @connect(state => ({
@@ -28,6 +29,7 @@ export default class CalendarSlider extends Component {
   renderRows() {
     const { allEmployees } = this.props;
     if (allEmployees) {
+      sortEmployeesArray(allEmployees);
       return allEmployees.map((employee, i) => {
         return (
           <EmployeeRow
