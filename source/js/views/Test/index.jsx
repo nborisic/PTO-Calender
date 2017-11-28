@@ -108,7 +108,6 @@ export default class Test extends Component {
       );
     }
 
-    console.log(this.props.usersData);
     return (
       <div className='Dashboard'>
         <div className='hedder'>

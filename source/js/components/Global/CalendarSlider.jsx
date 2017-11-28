@@ -9,6 +9,9 @@ import { sortEmployeesArray } from 'utils/global.js';
 
 @connect(state => ({
   breakpoint: state.app.get('breakpoint'),
+  projects: state.filter.get('PROJECT'),
+  location: state.filter.get('LOCATION'),
+  discipline: state.filter.get('DISCIPLINE'),
 }))
 export default class CalendarSlider extends Component {
   static propTypes = {
@@ -17,23 +20,71 @@ export default class CalendarSlider extends Component {
     allWeeks: PropTypes.array,
     breakpoint: PropTypes.string,
     scrollFunction: PropTypes.func,
+    location: PropTypes.array,
+    projects: PropTypes.array,
+    discipline: PropTypes.array,
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      emplyeesToRender: this.props.allEmployees,
+    };
 
     this.renderRows = this.renderRows.bind(this);
+  }
+
+
+  componentWillReceiveProps(nextProps) {
+    this.filterEmployees(nextProps);
+  }
+
+  checkEmployee(employee, checkFilter) {
+    const statement = [];
+    for (let i = 0; i < employee[checkFilter.key].length; i++) {
+      for (let j = 0; j < checkFilter.value.length; j++) {
+        statement.push(employee[checkFilter.key][i] === checkFilter.value[j]);
+      }
+    }
+    let counter = 0;
+    for (let k = 0; k < statement.length; k++) {
+      if (statement[k]) {
+        counter += 1;
+      }
+    }
+    return counter === checkFilter.value.length;
+  }
+
+  filterEmployees = (nextProps) => {
+    const { location, discipline, projects } = nextProps;
+    const { allEmployees } = this.props;
+    let newSetOfEmploees = [];
+    if (location.length || discipline.length || projects.length) {
+      allEmployees.map((employee) => {
+        if (employee.location === location
+          || employee.discipline === discipline
+          || this.checkEmployee(employee, { key: 'projects', value: projects })
+        ) {
+          newSetOfEmploees.push(employee);
+        }
+        return true;
+      });
+    } else {
+      newSetOfEmploees = allEmployees;
+    }
+    this.setState({
+      emplyeesToRender: newSetOfEmploees,
+    });
   }
 
 
   renderRows() {
     const { allEmployees } = this.props;
     if (allEmployees) {
-      sortEmployeesArray(allEmployees);
-       //filtered = this.filtereEmployees();
-
-
-      return allEmployees.map((employee, i) => {
+      const newEmploeesToRender = this.state.emplyeesToRender.concat([]);
+      sortEmployeesArray(newEmploeesToRender);
+      return newEmploeesToRender.map((employee, i) => {
         return (
           <EmployeeRow
             key={ `employee${ i }` }
@@ -50,6 +101,7 @@ export default class CalendarSlider extends Component {
 
 
   render() {
+    console.log(this.props.allEmployees);
     return (
       <div className='calendarTable'>
         <div className='calendarHedder'>

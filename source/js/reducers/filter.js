@@ -13,14 +13,13 @@ const initialState = Map({
 
 const actionsMap = {
   [ADD_FILTER]: (state, action) => {
-    const addFilter = state.get(`${ action.category }`);
-    addFilter.push(action.value);
+    const addFilter = [...state.get(action.category), action.value];
     return state.merge(Map({
       [action.category]: addFilter,
     }));
   },
   [REMOVE_FILTER]: (state, action) => {
-    const removeFilter = state.get(`${ action.category }`);
+    const removeFilter = state.get(action.category).concat([]);
     const position = removeFilter.indexOf(action.value);
     removeFilter.splice(position, 1);
     return state.merge(Map({
