@@ -30,6 +30,9 @@ export default class CalendarSlider extends Component {
     const { allEmployees } = this.props;
     if (allEmployees) {
       sortEmployeesArray(allEmployees);
+       //filtered = this.filtereEmployees();
+
+
       return allEmployees.map((employee, i) => {
         return (
           <EmployeeRow

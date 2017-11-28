@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { sortDropdownArray } from 'utils/global';
+import { addFilter, removeFilter } from 'actions/filter';
 
-
+@connect(state => ({
+  filter: state.filter.get('filter'),
+}))
 export default class FilterGroup extends Component {
   static propTypes = {
     usersData: PropTypes.array,
+    dispatch: PropTypes.func,
   }
 
   constructor() {
@@ -33,8 +38,8 @@ export default class FilterGroup extends Component {
     this.setDropdown();
   }
 
-
   setDropdownItem(e) {
+    const { dispatch } = this.props;
     const { projects, discipline, location } = this.state;
     const newElement = (
       <span
@@ -54,6 +59,8 @@ export default class FilterGroup extends Component {
     buttonsArray.push(
       newElement
     );
+
+    dispatch(addFilter(e.target.dataset.category, e.target.value));
 
     let position;
     const newProjectState = projects.concat([]);
@@ -85,6 +92,7 @@ export default class FilterGroup extends Component {
       openDropdown: false,
       click: false,
     });
+    return true;
   }
 
   // vadi sve stvari za pocetni dropdown
@@ -144,6 +152,7 @@ export default class FilterGroup extends Component {
   }
 
   deleteElement(e) {
+    const { dispatch } = this.props;
     const { projects, discipline, location } = this.state;
     let indexOfElement;
     for (let i = 0; i < this.state.buttonsArray.length; i++) {
@@ -153,6 +162,8 @@ export default class FilterGroup extends Component {
     }
     const newArray = this.state.buttonsArray.concat([]);
     newArray.splice(indexOfElement, 1);
+
+    dispatch(removeFilter(e.target.dataset.category, e.target.value));
 
     const newProjectState = projects.concat([]);
     const newLocationState = location.concat([]);
@@ -241,6 +252,8 @@ export default class FilterGroup extends Component {
     } else {
       document.removeEventListener('click', this.handleOffClick);
     }
+
+  //  console.log(this.state.buttonsArray);
 
     return (
       <div className='filterGroup'>
