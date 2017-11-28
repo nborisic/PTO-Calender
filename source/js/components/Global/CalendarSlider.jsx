@@ -42,9 +42,15 @@ export default class CalendarSlider extends Component {
 
   checkEmployee(employee, checkFilter) {
     const statement = [];
-    for (let i = 0; i < employee[checkFilter.key].length; i++) {
+    if (checkFilter.key !== 'location') {
+      for (let i = 0; i < employee[checkFilter.key].length; i++) {
+        for (let j = 0; j < checkFilter.value.length; j++) {
+          statement.push(employee[checkFilter.key][i] === checkFilter.value[j]);
+        }
+      }
+    } else {
       for (let j = 0; j < checkFilter.value.length; j++) {
-        statement.push(employee[checkFilter.key][i] === checkFilter.value[j]);
+        statement.push(employee[checkFilter.key] === checkFilter.value[j]);
       }
     }
     let counter = 0;
@@ -62,9 +68,10 @@ export default class CalendarSlider extends Component {
     let newSetOfEmploees = [];
     if (location.length || discipline.length || projects.length) {
       allEmployees.map((employee) => {
-        if (employee.location === location
-          || employee.discipline === discipline
-          || this.checkEmployee(employee, { key: 'projects', value: projects })
+        if (
+          this.checkEmployee(employee, { key: 'location', value: location }) &&
+          this.checkEmployee(employee, { key: 'discipline', value: discipline })
+          && this.checkEmployee(employee, { key: 'projects', value: projects })
         ) {
           newSetOfEmploees.push(employee);
         }
@@ -101,7 +108,13 @@ export default class CalendarSlider extends Component {
 
 
   render() {
-    console.log(this.props.allEmployees);
+    if (this.state.emplyeesToRender && !this.state.emplyeesToRender.length) {
+      return (
+        <div className='noMatch'>
+          NO ONE MATCHES THE FILTERS
+        </div>
+      );
+    }
     return (
       <div className='calendarTable'>
         <div className='calendarHedder'>

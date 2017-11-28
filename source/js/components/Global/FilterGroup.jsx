@@ -108,8 +108,10 @@ export default class FilterGroup extends Component {
             projects.push(user.projects[i]);
           }
         }
-        if (!discipline.includes(user.discipline)) {
-          discipline.push(user.discipline);
+        for (let j = 0; j < user.discipline.length; j++) {
+          if (!discipline.includes(user.discipline[j])) {
+            discipline.push(user.discipline[j]);
+          }
         }
         if (!location.includes(user.location)) {
           location.push(user.location);
