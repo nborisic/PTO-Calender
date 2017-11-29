@@ -102,14 +102,23 @@ button:disabled {
   background-color: red;
   color: white;
   //font-weight: 500;
+  &:hover {
+    background-color: blue;
+  }
+  &:hover + .background {
+      display: block;
+  }
 }
 
-
+.calendarTable {
+  overflow: hidden;
+}
 
 
 .viewContainer {
   width: 100%;
-  overflow: hidden;
+//  overflow-y: auto;
+//  overflow-x: visible;
   border-right: 1px solid #E2E2E2;
   border-left: 1px solid #E2E2E2;
   @include md {
@@ -178,6 +187,11 @@ button:disabled {
   @include md {
     display: flex;
     flex-shrink: 0;
+    background: white;
+    z-index: 2;
+    align-self: baseline;
+    margin-top: 10px;
+    padding-top: 10px;
   };
 }
 .logoGroup {
@@ -363,6 +377,9 @@ button:disabled {
   display: flex;
   width: 100%;
   .employeeInfo {
+    background: $white;
+    z-index: 10;
+    position: relative;
     display: flex;
     flex-grow: 1;
     flex-shrink: 0;
@@ -431,4 +448,66 @@ button:disabled {
     padding: 15px 0 0 0;
   };
   color: #EC1C24;
+}
+
+.leaveType {
+  padding: 9px 16px;
+  background: white;
+  border: 1px solid #D4D4D4;
+  color: black;
+  top: -10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+
+.background {
+  width: 90px;
+  top: -41px;
+  left: -30px;
+  display: none;
+  position: absolute;
+  pointer-events: none;
+}
+
+.dubbleRowPos {
+  top: -58px;
+}
+
+.rightEdgePos {
+  left: -60px;
+}
+
+.leftEdgePos {
+  left: 0px;
+}
+
+.triangle {
+  left: 38px;
+  top: 30px;
+  position: absolute;
+  margin: auto;
+  width: 14px;
+  height: 14px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url(../assets/img/triangle.svg);
+}
+
+.dubbleRowTriangle {
+  top: 46px;
+}
+
+.rightEdgeTrinagle {
+  left: 68px;
+}
+
+.leftEdgeTrinagle {
+  left: 8px;
+}
+
+.wideItemClass {
+  padding: 9px 5px;
+  width: 100px;
 }

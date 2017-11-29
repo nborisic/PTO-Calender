@@ -18,7 +18,7 @@ export default class EmplyeeRow extends Component {
     super();
 
     this.state = {
-      ptoDays: [],
+      ptoDays: {},
     };
 
     this.allPtoDates = this.allPtoDates.bind(this);
@@ -32,8 +32,9 @@ export default class EmplyeeRow extends Component {
     const { pto } = this.props.oneEmployee;
     let fromDate;
     let endDate;
-    const ptoArray = [];
+    const allPtoDays = [];
     for (let i = 0; i < pto.length; i++) {
+      const ptoArray = [];
       fromDate = moment(`${ pto[i].start }`, 'MM/DD/YYYY');
       endDate = moment(`${ pto[i].end }`, 'MM/DD/YYYY');
       const daysOnPto = endDate.diff(fromDate, 'days');
@@ -41,23 +42,76 @@ export default class EmplyeeRow extends Component {
       for (let j = 0; j < daysOnPto; j++) {
         ptoArray.push(fromDate.add(1, 'day').format('MM/DD/YYYY'));
       }
+      const ptoObj = { [pto[i].type]: ptoArray };
+      allPtoDays.push(ptoObj);
     }
+
     this.setState({
-      ptoDays: ptoArray,
+      ptoDays: allPtoDays,
     });
   }
 
   renderDates() {
+    const { ptoDays } = this.state;
     const { animate, breakpoint, allWeeks } = this.props;
     const weekDays = [];
     const weekClass = animate ? 'animateClass' : 'weekContainer';
     const containerWidth = breakpoint === 'mobile' ? 100 / 3 : 100 / 12;
     allWeeks.map((oneWeek, index) => {
       const oneWeekDay = [];
-
       for (let i = 0; i < 5; i++) {
-        const oneDayStyle = this.state.ptoDays.includes(oneWeek[i].format('MM/DD/YYYY')) ? 'redCircle' : '';
-        oneWeekDay.push(<div className={ `circle ${ oneDayStyle }` } key={ `${ index }/${ i }` } >{ oneWeek[i].format('D') }</div>);
+        let ptoType;
+
+        for (let k = 0; k < ptoDays.length; k++) {
+          const key = Object.keys(ptoDays[k])[0];
+          const isPto = ptoDays[k][key].includes(oneWeek[i].format('MM/DD/YYYY'));
+          if (isPto) {
+            ptoType = key;
+            break;
+          }
+        }
+
+        // specific classes depending on position and length of leave type
+        let verticalPosition = '';
+        let horizontalPosition = '';
+        let horizontalPositionTriangle = '';
+        let verticalPositionTriangle = '';
+        let wideItemClass = '';
+        const wideItems = ['Conference', 'Recognition Day', 'Bereavement'];
+        const dubbleRowItems = ['Recognition Day', 'Parental leave', 'Jury Duty', 'Client travel'];
+        if (dubbleRowItems.includes(ptoType)) {
+          verticalPosition = 'dubbleRowPos';
+          verticalPositionTriangle = 'dubbleRowTriangle';
+        }
+        if (wideItems.includes(ptoType)) {
+          wideItemClass = 'wideItemClass';
+        }
+        if ((index % 4 === 3 && i === 4) || (breakpoint === 'mobile' && i === 4)) {
+          horizontalPosition = 'rightEdgePos';
+          horizontalPositionTriangle = 'rightEdgeTrinagle';
+        } else if ((index % 4 === 0 && i === 0) || (breakpoint === 'mobile' && i === 0)) {
+          horizontalPosition = 'leftEdgePos';
+          horizontalPositionTriangle = 'leftEdgeTrinagle';
+        }
+        const oneDayStyle = ptoType ? 'redCircle' : '';
+
+
+        oneWeekDay.push(
+          <div key={ `${ index }/${ i }` } style={ { position: 'relative' } }>
+            <div className={ `circle ${ oneDayStyle }` }>
+              { oneWeek[i].format('D') }
+            </div>
+            { ptoType ?
+              <div className={ `background ${ verticalPosition } ${ horizontalPosition }` }>
+                <div className={ `leaveType ${ wideItemClass }` }>
+                  { ptoType }
+                </div>
+                <div className={ `triangle ${ verticalPositionTriangle } ${ horizontalPositionTriangle }` } />
+              </div>
+              : ''
+            }
+          </div>
+        );
       }
       weekDays.push(
         <div className={ weekClass } key={ index } style={ { width: `${ containerWidth }%` } }>
@@ -77,7 +131,6 @@ export default class EmplyeeRow extends Component {
     } else if (animate === 'right') {
       transform = `translateX(-${ (2 / 3) * 100 }%)`;
     }
-
     return (
       <div className='employeeContainer'>
         <div className='employeeInfo'>
