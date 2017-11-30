@@ -99,14 +99,17 @@ button:disabled {
 }
 
 .redCircle {
-  background-color: red;
+  background-color: #EC1C24;
   color: white;
-  //font-weight: 500;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
   &:hover {
-    background-color: blue;
+    background-color: #1C8DEC;
   }
-  &:hover + .background {
-      display: block;
+  &:hover + .tooltip {
+      opacity: 100;
+      transition: opacity 0.5s;
   }
 }
 
@@ -117,8 +120,6 @@ button:disabled {
 
 .viewContainer {
   width: 100%;
-//  overflow-y: auto;
-//  overflow-x: visible;
   border-right: 1px solid #E2E2E2;
   border-left: 1px solid #E2E2E2;
   @include md {
@@ -135,6 +136,9 @@ button:disabled {
   @include md {
     justify-content: space-between;
   };
+  >div {
+    position: relative;
+  }
 }
 
 .monthContainer {
@@ -165,7 +169,7 @@ button:disabled {
 
 .animateClass {
  @extend .weekContainer;
-  border-left: 1px solid $black;
+  border-left: 1px solid #E2E2E2;
   @include md {
     border: transparent;
   };
@@ -185,13 +189,12 @@ button:disabled {
 .mobileScreenScrollButtons {
   display: none;
   @include md {
+    position: relative;
     display: flex;
     flex-shrink: 0;
     background: white;
-    z-index: 2;
     align-self: baseline;
-    margin-top: 10px;
-    padding-top: 10px;
+    padding-top: 22px;
   };
 }
 .logoGroup {
@@ -210,7 +213,6 @@ button:disabled {
     margin: 35px 0 0 0;
   };
   >span {
-    //align-self: center;
     flex-shrink: 0;
     margin-right: 10px;
     margin-top: 17px;
@@ -222,7 +224,6 @@ button:disabled {
   };
   .buttons {
     display: flex;
-  //  align-self: center;
     flex-wrap: wrap;
     .searchGrop {
       display: flex;
@@ -230,14 +231,12 @@ button:disabled {
     }
     .elementDiv {
       display: flex;
-      //align-self: center;
       align-self: baseline;
       margin-top: 7.5px;
       padding: 8px 9px 9px 16px;
       border-radius: 4px;
       border: 1px solid #D0D0D0;
       margin-right: 10px;
-      //margin-bottom: 10px;
     //  box-shadow: 0 2px 4px rgba(0, 0, 0, .5), inset 0 1px 3px rgba(0, 0, 0, .5);
       >span {
         font-size: 14px;
@@ -246,6 +245,7 @@ button:disabled {
       >button {
         outline: none;
         border: none;
+        margin-top: 1px;
         height: 14px;
         background-image: url(../assets/img/x_symbol.svg);
         background-position: center center;
@@ -273,7 +273,26 @@ button:disabled {
     transition: transform 1s;
   }
   .filterDrop {
+    position: relative;
     align-self: center;
+    > div {
+      overflow: hidden;
+    }
+    .cancelInput {
+      position: absolute;
+      margin-top: 4px;
+      right: 0px;
+      outline: none;
+      border: none;
+      height: 14px;
+      background-image: url(../assets/img/x_symbol.svg);
+      background-position: center center;
+      background-repeat: no-repeat;
+      @include  md{
+        height: 10px;
+        background-size: contain;
+      };
+    }
     .filterInput {
       &::placeholder {
         color: $black;
@@ -299,7 +318,7 @@ button:disabled {
     }
     .dropMenu {
       position: absolute;
-      z-index: 1;
+      z-index: 200;
       margin-left: 10px;
       background-color: $white;
       border: 1px solid rgba(0, 0, 0, .12);
@@ -308,7 +327,8 @@ button:disabled {
       width: 18em;
       border-radius: 0 0 4px 4px;
     //  padding: 10px 0;
-      box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .13);
+      box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .13),
+                  inset 0 1px 3px 0  rgba(0, 0, 0, .5);
       max-height: 200px;
       overflow: scroll;
       @include md {
@@ -439,6 +459,8 @@ button:disabled {
 }
 
 .calendarTable {
+  position: relative;
+  z-index: 1;
   margin-top: 40px;
 }
 
@@ -461,11 +483,12 @@ button:disabled {
 }
 
 
-.background {
+.tooltip {
   width: 90px;
   top: -41px;
   left: -30px;
-  display: none;
+  //display: none;
+  opacity: 0;
   position: absolute;
   pointer-events: none;
 }

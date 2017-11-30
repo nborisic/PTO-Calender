@@ -207,6 +207,12 @@ export default class FilterGroup extends Component {
     });
   }
 
+  handleCancelClick = () => {
+    this.setState({
+      inputValue: '',
+    });
+  }
+
   renderDropdownPart = (stateParts, label) => {
     if (stateParts) {
       sortDropdownArray(stateParts);
@@ -248,6 +254,7 @@ export default class FilterGroup extends Component {
   render() {
     const buttonClass = this.state.click ? 'rotate' : 'addFilter';
     const inputClass = this.state.click ? 'filterInput' : 'invisible';
+    const cancelButtonClass = this.state.inputValue ? 'cancelInput' : 'invisible';
 
     if (this.state.openDropdown) {
       document.addEventListener('click', this.handleOffClick);
@@ -255,7 +262,6 @@ export default class FilterGroup extends Component {
       document.removeEventListener('click', this.handleOffClick);
     }
 
-  //  console.log(this.state.buttonsArray);
 
     return (
       <div className='filterGroup'>
@@ -268,7 +274,7 @@ export default class FilterGroup extends Component {
               onClick={ this.handleFilterClick }
             />
             <div className='filterDrop'>
-              <div style={ { overflow: 'hidden', display: 'inline-flex' } }>
+              <div>
                 <input
                   onKeyDown={ this.handleArrowPress }
                   type='text'
@@ -277,6 +283,10 @@ export default class FilterGroup extends Component {
                   className={ inputClass }
                   placeholder='Filter by project, discipline, or location'
                   ref={ (a) => { this.filterInput = a; } }
+                />
+                <button
+                  className={ cancelButtonClass }
+                  onClick={ this.handleCancelClick }
                 />
               </div>
               <div className={ this.state.openDropdown ? 'dropMenu' : 'invisible' }>

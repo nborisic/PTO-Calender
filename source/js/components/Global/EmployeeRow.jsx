@@ -97,12 +97,12 @@ export default class EmplyeeRow extends Component {
 
 
         oneWeekDay.push(
-          <div key={ `${ index }/${ i }` } style={ { position: 'relative' } }>
+          <div key={ `${ index }/${ i }` }>
             <div className={ `circle ${ oneDayStyle }` }>
               { oneWeek[i].format('D') }
             </div>
             { ptoType ?
-              <div className={ `background ${ verticalPosition } ${ horizontalPosition }` }>
+              <div className={ `tooltip ${ verticalPosition } ${ horizontalPosition }` }>
                 <div className={ `leaveType ${ wideItemClass }` }>
                   { ptoType }
                 </div>

@@ -35,7 +35,6 @@ export default class EmplyeeRow extends Component {
     const weekDays = [];
     const monthArray = [];
     const containerWidth = breakpoint === 'mobile' ? 100 / 3 : 100 / 12;
-  //  const monthClass = breakpoint === 'mobile' ? 'monthContainerMobile' : 'monthContainer';
     allWeeks.map((oneWeek, index) => {
       const oneWeekDay = [];
       let setOnFour;
@@ -47,8 +46,8 @@ export default class EmplyeeRow extends Component {
         }
       }
 
-      if (index === 4) {
-        !setOnFour ? oneWeekDay.push(<div key={ `jump${ index }` } >{ oneWeek[0].format('MMM') }</div>) : '';
+      if (index === 4 && !setOnFour) {
+        oneWeekDay.push(<div key={ `jump${ index }` } >{ oneWeek[0].format('MMM') }</div>);
       }
       weekDays.push(
         <div key={ index } style={ { width: `${ containerWidth }%` } }>
