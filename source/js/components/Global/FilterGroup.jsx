@@ -91,6 +91,9 @@ export default class FilterGroup extends Component {
       inputValue: '',
       openDropdown: false,
       click: false,
+      newProjects: null,
+      newDiscipline: null,
+      newLocation: null,
     });
     return true;
   }
@@ -193,6 +196,30 @@ export default class FilterGroup extends Component {
   }
 
   changeInput(e) {
+    const { projects, discipline, location } = this.state;
+    if (!e.target.value) {
+      this.setDropdown();
+    } else {
+      const newProjects = projects.filter((term) => {
+        const termToTest = new RegExp(e.target.value.toUpperCase());
+        return termToTest.test(term.toUpperCase());
+      });
+      const newDiscipline = discipline.filter((term) => {
+        const termToTest = new RegExp(e.target.value.toUpperCase());
+        return termToTest.test(term.toUpperCase());
+      });
+      const newLocation = location.filter((term) => {
+        const termToTest = new RegExp(e.target.value.toUpperCase());
+        return termToTest.test(term.toUpperCase());
+      });
+      this.setState({
+        newProjects,
+        newDiscipline,
+        newLocation,
+      });
+    }
+
+
     this.setState({
       openDropdown: e.target.value && true,
       inputValue: e.target.value,
@@ -235,8 +262,8 @@ export default class FilterGroup extends Component {
   }
 
   renderDropdown = () => {
-    const { projects, discipline, location } = this.state;
-    const categroyArray = [['PROJECT', projects], ['DISCIPLINE', discipline], ['LOCATION', location]];
+    const { projects, discipline, location, newProjects, newDiscipline, newLocation } = this.state;
+    const categroyArray = [['PROJECT', newProjects || projects], ['DISCIPLINE', newDiscipline || discipline], ['LOCATION', newLocation || location]];
     const dropdownArray = [];
 
     categroyArray.map(category => {
@@ -261,7 +288,6 @@ export default class FilterGroup extends Component {
     } else {
       document.removeEventListener('click', this.handleOffClick);
     }
-
 
     return (
       <div className='filterGroup'>
