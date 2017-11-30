@@ -25,6 +25,10 @@ export default class FilterGroup extends Component {
       discipline: null,
       location: null,
       projects: null,
+      newProjects: null,
+      newDiscipline: null,
+      newLocation: null,
+      newEmploee: null,
     };
 
     this.handleFilterClick = this.handleFilterClick.bind(this);
@@ -94,6 +98,7 @@ export default class FilterGroup extends Component {
       newProjects: null,
       newDiscipline: null,
       newLocation: null,
+      newEmploee: null,
     });
     return true;
   }

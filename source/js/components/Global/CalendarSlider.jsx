@@ -111,7 +111,7 @@ export default class CalendarSlider extends Component {
     if (this.state.emplyeesToRender && !this.state.emplyeesToRender.length) {
       return (
         <div className='noMatch'>
-          NO ONE MATCHES THE FILTERS
+          No one matches the filters
         </div>
       );
     }

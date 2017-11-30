@@ -403,7 +403,7 @@ button:disabled {
     display: flex;
     flex-grow: 1;
     flex-shrink: 0;
-    width: 22.5%;
+    width: 25%;
     padding: 5px 0 12px 0;
     font-size: 21px;
     @include md {
@@ -465,11 +465,21 @@ button:disabled {
 }
 
 .noMatch {
-  padding: 20px 0 0 30px;
-  @include md{
-    padding: 15px 0 0 0;
-  };
-  color: #EC1C24;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  color: #D4D4D4;
+}
+
+.loading {
+  @extend .noMatch;
+  >img {
+    width: 150px;
+    @include md {
+      width: 100px;
+    };
+  }
 }
 
 .leaveType {

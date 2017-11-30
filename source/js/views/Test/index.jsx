@@ -8,6 +8,7 @@ import ScrollButtons from 'components/Global/ScrollButtons';
 import breakpoint from 'decorators/breakpoint';
 import { fetchUsers } from 'actions/app';
 import workAndCoLogoImg from '../../../assets/img/workco-logo.svg';
+import loadingGif from '../../../assets/img/loading.gif';
 
 
 const ANIMATION_DURAION = 500;
@@ -104,7 +105,10 @@ export default class Test extends Component {
   render() {
     if (this.props.fetchUsersLoading) {
       return (
-        <div style={ { fontSize: '35px' } }>Loading....</div>
+        <div className='loading'><img
+          src={ loadingGif }
+          alt='Loading....'
+        /></div>
       );
     }
 
