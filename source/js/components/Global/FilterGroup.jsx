@@ -21,15 +21,21 @@ export default class FilterGroup extends Component {
       inputValue: '',
       buttonsArray: [],
       openDropdown: false,
-      highlightIndex: 0,
+
+      highlightCounter: -1,
+      selectItem: false,
+
       discipline: null,
       location: null,
       projects: null,
       empolyees: null,
+
       newProjects: null,
       newDiscipline: null,
       newLocation: null,
       newEmployees: null,
+
+      heiglightPart: '',
     };
 
     this.handleFilterClick = this.handleFilterClick.bind(this);
@@ -37,6 +43,7 @@ export default class FilterGroup extends Component {
     this.changeInput = this.changeInput.bind(this);
     this.deleteElement = this.deleteElement.bind(this);
     this.handleOffClick = this.handleOffClick.bind(this);
+    this.handleArrowPress = this.handleArrowPress.bind(this);
   }
 
   componentWillMount() {
@@ -98,7 +105,9 @@ export default class FilterGroup extends Component {
       location: newLocationState,
       discipline: newDisciplineState,
       empolyees: newEmployeesState,
-
+      selectItem: false,
+      heiglightPart: '',
+      highlightCounter: -1,
       buttonsArray,
       inputValue: '',
       openDropdown: false,
@@ -148,21 +157,80 @@ export default class FilterGroup extends Component {
     }
   }
 
-  handleArrowPress = (e) => {
+  handleArrowPress(e) {
+    if (this.state.inputValue === '') return;
+    const { newProjects, newLocation, newDiscipline, newEmployees } = this.state;
+    const stateArray = [newProjects, newLocation, newDiscipline, newEmployees];
+    const itemsCount = stateArray.reduce((acc, cur) => {
+      return acc + cur.length;
+    }, 0);
+    const projectsCount = newProjects.length;
+    const locationCount = newLocation.length;
+    const disciplineCount = newDiscipline.length;
+    const employeeCount = newEmployees.length;
     if (e.which === 40) {
+      const noToBe = this.state.highlightCounter + 1 === itemsCount ? 0 : this.state.highlightCounter + 1;
+      let heiglightPart;
+      if (projectsCount && new RegExp(`[0-${ projectsCount - 1 }]`).test(noToBe)) {
+        heiglightPart = `PROJECT${ noToBe }`;
+      } else if (locationCount && new RegExp(`[${ projectsCount }-${ projectsCount + (locationCount - 1) }]`).test(noToBe)) {
+        const noAddOn = noToBe - projectsCount;
+        heiglightPart = `LOCATION${ noAddOn }`;
+      } else if (disciplineCount && new RegExp(`[${ projectsCount + locationCount }-${ projectsCount + locationCount + (disciplineCount - 1) }]`).test(noToBe)) {
+        const noAddOn = noToBe - projectsCount - locationCount;
+        heiglightPart = `DISCIPLINE${ noAddOn }`;
+      } else if (employeeCount && new RegExp(`[${ projectsCount + locationCount + disciplineCount }-${ itemsCount - 1 }]`).test(noToBe)) {
+        const noAddOn = noToBe - projectsCount - locationCount - disciplineCount;
+        heiglightPart = `EMPLOYEES${ noAddOn }`;
+      }
       this.setState({
-        highlightIndex: (this.state.highlightIndex + 1) % 5, // ovde ide lenght niza koji renderujes
+        heiglightPart,
+        highlightCounter: noToBe % itemsCount,
       });
     } else if (e.which === 38) {
-      if (this.state.highlightIndex === 0) {
+      if (this.state.highlightCounter === 0 || this.state.highlightCounter === -1) {
+        const noToBe = itemsCount - 1;
+        let heiglightPart;
+        if (projectsCount && new RegExp(`[0-${ projectsCount - 1 }]`).test(noToBe)) {
+          heiglightPart = `PROJECT${ noToBe }`;
+        } else if (locationCount && new RegExp(`[${ projectsCount }-${ projectsCount + (locationCount - 1) }]`).test(noToBe)) {
+          const noAddOn = noToBe - projectsCount;
+          heiglightPart = `LOCATION${ noAddOn }`;
+        } else if (disciplineCount && new RegExp(`[${ projectsCount + locationCount }-${ projectsCount + locationCount + (disciplineCount - 1) }]`).test(noToBe)) {
+          const noAddOn = noToBe - projectsCount - locationCount;
+          heiglightPart = `DISCIPLINE${ noAddOn }`;
+        } else if (employeeCount && new RegExp(`[${ projectsCount + locationCount + disciplineCount }-${ itemsCount - 1 }]`).test(noToBe)) {
+          const noAddOn = noToBe - projectsCount - locationCount - disciplineCount;
+          heiglightPart = `EMPLOYEES${ noAddOn }`;
+        }
         this.setState({
-          highlightIndex: (5 - 1) % 5, // lenght
+          heiglightPart,
+          highlightCounter: itemsCount - 1,
         });
       } else {
+        const noToBe = this.state.highlightCounter - 1 === itemsCount ? 0 : this.state.highlightCounter - 1;
+        let heiglightPart;
+        if (projectsCount && new RegExp(`[0-${ projectsCount - 1 }]`).test(noToBe)) {
+          heiglightPart = `PROJECT${ noToBe }`;
+        } else if (locationCount && new RegExp(`[${ projectsCount }-${ projectsCount + (locationCount - 1) }]`).test(noToBe)) {
+          const noAddOn = noToBe - projectsCount;
+          heiglightPart = `LOCATION${ noAddOn }`;
+        } else if (disciplineCount && new RegExp(`[${ projectsCount + locationCount }-${ projectsCount + locationCount + (disciplineCount - 1) }]`).test(noToBe)) {
+          const noAddOn = noToBe - projectsCount - locationCount;
+          heiglightPart = `DISCIPLINE${ noAddOn }`;
+        } else if (employeeCount && new RegExp(`[${ projectsCount + locationCount + disciplineCount }-${ itemsCount - 1 }]`).test(noToBe)) {
+          const noAddOn = noToBe - projectsCount - locationCount - disciplineCount;
+          heiglightPart = `EMPLOYEES${ noAddOn }`;
+        }
         this.setState({
-          highlightIndex: (this.state.highlightIndex - 1) % 5,
+          heiglightPart,
+          highlightCounter: (this.state.highlightCounter - 1) % itemsCount,
         });
       }
+    } else if (e.which === 13) {
+      this.setState({
+        selectItem: true,
+      });
     }
   }
 
@@ -265,6 +333,8 @@ export default class FilterGroup extends Component {
   handleCancelClick = () => {
     this.setState({
       inputValue: '',
+      heiglightPart: '',
+      highlightCounter: -1,
     });
   }
 
@@ -273,10 +343,23 @@ export default class FilterGroup extends Component {
       sortDropdownArray(stateParts);
       return (
         stateParts.map((statePart, i) => {
+          const fucusedElement = this.state.heiglightPart === `${ label }${ i }`;
+          const buttonClass = fucusedElement ? 'arrowHiglight' : '';
+          if (fucusedElement && this.state.selectItem) {
+            const e = {
+              target: {
+                value: statePart,
+                dataset: {
+                  category: label,
+                },
+              },
+            };
+            this.setDropdownItem(e);
+          }
           return (
             <button
               key={ label + i }
-              className='filterButton'
+              className={ `filterButton ${ buttonClass }` }
               onClick={ this.setDropdownItem }
               value={ statePart }
               data-category={ label }
@@ -324,7 +407,6 @@ export default class FilterGroup extends Component {
     } else {
       document.removeEventListener('click', this.handleOffClick);
     }
-
     return (
       <div className='filterGroup'>
         <span>Filter by:</span>

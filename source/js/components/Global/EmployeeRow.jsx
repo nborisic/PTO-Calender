@@ -25,11 +25,14 @@ export default class EmplyeeRow extends Component {
   }
 
   componentWillMount() {
-    this.allPtoDates();
+    this.allPtoDates(this.props.oneEmployee.pto);
   }
 
-  allPtoDates() {
-    const { pto } = this.props.oneEmployee;
+  componentWillReceiveProps(nextProps) {
+    this.allPtoDates(nextProps.oneEmployee.pto);
+  }
+
+  allPtoDates(pto) {
     let fromDate;
     let endDate;
     const allPtoDays = [];
@@ -53,7 +56,7 @@ export default class EmplyeeRow extends Component {
 
   renderDates() {
     const { ptoDays } = this.state;
-    const { animate, breakpoint, allWeeks } = this.props;
+    const { animate, breakpoint, allWeeks, oneEmployee } = this.props;
     const weekDays = [];
     const weekClass = animate ? 'animateClass' : 'weekContainer';
     const containerWidth = breakpoint === 'mobile' ? 100 / 3 : 100 / 12;
@@ -97,7 +100,7 @@ export default class EmplyeeRow extends Component {
 
 
         oneWeekDay.push(
-          <div key={ `${ index }/${ i }` }>
+          <div key={ `${ oneEmployee.name }/${ i }` }>
             <div className={ `circle ${ oneDayStyle }` }>
               { oneWeek[i].format('D') }
             </div>
@@ -114,7 +117,7 @@ export default class EmplyeeRow extends Component {
         );
       }
       weekDays.push(
-        <div className={ weekClass } key={ index } style={ { width: `${ containerWidth }%` } }>
+        <div className={ weekClass } key={ `${ oneEmployee.name }/${ index }` } style={ { width: `${ containerWidth }%` } }>
           <div className='oneWeek'>{ oneWeekDay }</div>
         </div>
       );
