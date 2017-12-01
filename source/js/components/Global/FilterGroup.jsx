@@ -25,10 +25,11 @@ export default class FilterGroup extends Component {
       discipline: null,
       location: null,
       projects: null,
+      empolyees: null,
       newProjects: null,
       newDiscipline: null,
       newLocation: null,
-      newEmploee: null,
+      newEmployees: null,
     };
 
     this.handleFilterClick = this.handleFilterClick.bind(this);
@@ -44,7 +45,7 @@ export default class FilterGroup extends Component {
 
   setDropdownItem(e) {
     const { dispatch } = this.props;
-    const { projects, discipline, location } = this.state;
+    const { projects, discipline, location, empolyees } = this.state;
     const newElement = (
       <span
         className='elementDiv'
@@ -70,6 +71,7 @@ export default class FilterGroup extends Component {
     const newProjectState = projects.concat([]);
     const newLocationState = location.concat([]);
     const newDisciplineState = discipline.concat([]);
+    const newEmployeesState = empolyees.concat([]);
     switch (e.target.dataset.category) {
       case 'PROJECT':
         position = projects.indexOf(e.target.value);
@@ -83,6 +85,10 @@ export default class FilterGroup extends Component {
         position = location.indexOf(e.target.value);
         newLocationState.splice(position, 1);
         break;
+      case 'EMPLOYEES':
+        position = empolyees.indexOf(e.target.value);
+        newEmployeesState.splice(position, 1);
+        break;
       default:
         return true;
     }
@@ -91,6 +97,8 @@ export default class FilterGroup extends Component {
       projects: newProjectState,
       location: newLocationState,
       discipline: newDisciplineState,
+      empolyees: newEmployeesState,
+
       buttonsArray,
       inputValue: '',
       openDropdown: false,
@@ -98,7 +106,7 @@ export default class FilterGroup extends Component {
       newProjects: null,
       newDiscipline: null,
       newLocation: null,
-      newEmploee: null,
+      newEmployees: null,
     });
     return true;
   }
@@ -109,6 +117,7 @@ export default class FilterGroup extends Component {
     const projects = [];
     const discipline = [];
     const location = [];
+    const empolyees = [];
     if (usersData) {
       usersData.map(user => {
         for (let i = 0; i < user.projects.length; i++) {
@@ -124,6 +133,9 @@ export default class FilterGroup extends Component {
         if (!location.includes(user.location)) {
           location.push(user.location);
         }
+        if (!empolyees.includes(user.name)) {
+          empolyees.push(user.name);
+        }
         return true;
       });
 
@@ -131,6 +143,7 @@ export default class FilterGroup extends Component {
         projects,
         discipline,
         location,
+        empolyees,
       });
     }
   }
@@ -163,7 +176,7 @@ export default class FilterGroup extends Component {
 
   deleteElement(e) {
     const { dispatch } = this.props;
-    const { projects, discipline, location } = this.state;
+    const { projects, discipline, location, empolyees } = this.state;
     let indexOfElement;
     for (let i = 0; i < this.state.buttonsArray.length; i++) {
       if (this.state.buttonsArray[i].props.children[1].props.value === e.target.value) {
@@ -178,6 +191,7 @@ export default class FilterGroup extends Component {
     const newProjectState = projects.concat([]);
     const newLocationState = location.concat([]);
     const newDisciplineState = discipline.concat([]);
+    const newEmployeesState = empolyees.concat([]);
     switch (e.target.dataset.category) {
       case 'PROJECT':
         newProjectState.push(e.target.value);
@@ -188,6 +202,9 @@ export default class FilterGroup extends Component {
       case 'LOCATION':
         newLocationState.push(e.target.value);
         break;
+      case 'EMPLOYEES':
+        newEmployeesState.push(e.target.value);
+        break;
       default:
         return true;
     }
@@ -195,13 +212,14 @@ export default class FilterGroup extends Component {
       projects: newProjectState,
       location: newLocationState,
       discipline: newDisciplineState,
+      empolyees: newEmployeesState,
       buttonsArray: newArray,
     });
     return true;
   }
 
   changeInput(e) {
-    const { projects, discipline, location } = this.state;
+    const { projects, discipline, location, empolyees } = this.state;
     if (!e.target.value) {
       this.setDropdown();
     } else {
@@ -217,10 +235,15 @@ export default class FilterGroup extends Component {
         const termToTest = new RegExp(e.target.value.toUpperCase());
         return termToTest.test(term.toUpperCase());
       });
+      const newEmployees = empolyees.filter((term) => {
+        const termToTest = new RegExp(e.target.value.toUpperCase());
+        return termToTest.test(term.toUpperCase());
+      });
       this.setState({
         newProjects,
         newDiscipline,
         newLocation,
+        newEmployees,
       });
     }
 
@@ -267,13 +290,21 @@ export default class FilterGroup extends Component {
   }
 
   renderDropdown = () => {
-    const { projects, discipline, location, newProjects, newDiscipline, newLocation } = this.state;
-    const categroyArray = [['PROJECT', newProjects || projects], ['DISCIPLINE', newDiscipline || discipline], ['LOCATION', newLocation || location]];
+    const { projects, discipline, location, empolyees, newProjects, newDiscipline, newLocation, newEmployees }
+    = this.state;
+    const categroyArray = [
+      ['PROJECT', newProjects || projects],
+      ['DISCIPLINE', newDiscipline || discipline],
+      ['LOCATION', newLocation || location],
+      ['EMPLOYEES', newEmployees || empolyees],
+    ];
     const dropdownArray = [];
 
     categroyArray.map(category => {
       if (category[1] && category[1].length) {
-        dropdownArray.push(<div key={ category[0] } className='categoryClass'>{category[0]}</div>);
+        dropdownArray.push(
+          <div key={ category[0] } className='categoryClass'>{category[0]}</div>
+        );
         dropdownArray.push(
           this.renderDropdownPart(category[1], category[0])
         );

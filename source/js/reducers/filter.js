@@ -9,6 +9,7 @@ const initialState = Map({
   PROJECT: [],
   LOCATION: [],
   DISCIPLINE: [],
+  EMPLOYEES: [],
 });
 
 const actionsMap = {
