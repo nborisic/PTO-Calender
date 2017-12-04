@@ -6,7 +6,6 @@ import CalenderHeadrer from 'components/Global/CalenderHeadrer';
 import ScrollButtons from 'components/Global/ScrollButtons';
 import { sortEmployeesArray } from 'utils/global.js';
 
-
 @connect(state => ({
   breakpoint: state.app.get('breakpoint'),
   projects: state.filter.get('PROJECT'),
@@ -37,10 +36,10 @@ export default class CalendarSlider extends Component {
     this.renderRows = this.renderRows.bind(this);
   }
 
-
   componentWillReceiveProps(nextProps) {
     this.filterEmployees(nextProps);
   }
+
 
   checkEmployee(employee, checkFilter) {
     const statement = [];

@@ -26,15 +26,16 @@ body {
 
 .App {
   font-size: 1.8rem;
-  padding: 2rem;
+//  padding: 2rem;
+  padding-top: 0px;
 
-  @include md {
-    padding: 3rem;
-  }
-
-  @include md {
-    padding: 4rem;
-  }
+  // @include md {
+  //   padding: 3rem;
+  // }
+  //
+  // @include md {
+  //   padding: 4rem;
+  // }
 }
 
 a {
@@ -112,11 +113,6 @@ button:disabled {
       transition: opacity 0.5s;
   }
 }
-
-.calendarTable {
-  overflow: hidden;
-}
-
 
 .viewContainer {
   width: 100%;
@@ -253,15 +249,19 @@ button:disabled {
       }
     }
   }
+
+.testing:hover {
+    fill: red;
+    //background-image: url(../assets/img/filterButtonHover.svg);
+  }
   .addFilter {
-    &:hover {
-      background-image: url(../assets/img/filterButtonHover.svg);
-    }
+
     align-self: center;
-    background-image: url(../assets/img/filterButton.svg);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    //background-image: url(../assets/img/filterButton.svg);
+    //background-position: center center;
+    //background-repeat: no-repeat;
+    //background-size: cover;
+    padding: 0px;
     border: none;
     outline: none;
     width: 27px;
@@ -448,10 +448,18 @@ button:disabled {
   };
 }
 
-.hedder {
+.header {
+  position: sticky;
+  padding: 54px 70px 35px 90px;
+  top: 0px;
+  z-index: 500;
+  background-color: $white;
   display: flex;
   justify-content: space-between;
+}
 
+.headerBorder {
+  border-bottom: 1px solid #E5E5E5;
 }
 .calendarHedder {
   display: flex;
@@ -459,9 +467,12 @@ button:disabled {
 }
 
 .calendarTable {
+  margin: 0px 70px 0px 90px;
+  padding-bottom: 15px;
+  overflow: hidden;
   position: relative;
   z-index: 1;
-  margin-top: 40px;
+  margin-top: 10px;
 }
 
 .noMatch {

@@ -78,6 +78,7 @@ export default class EmplyeeRow extends Component {
       }
     }
 
+
     return (
       <div className='employeeContainer'>
         <div className='monthToggleDiv' />

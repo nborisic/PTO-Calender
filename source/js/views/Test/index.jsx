@@ -6,6 +6,7 @@ import FilterGroup from 'components/Global/FilterGroup';
 import CalendarSlider from 'components/Global/CalendarSlider';
 import ScrollButtons from 'components/Global/ScrollButtons';
 import breakpoint from 'decorators/breakpoint';
+import { withScroll } from 'react-window-decorators';
 import { fetchUsers } from 'actions/app';
 import workAndCoLogoImg from '../../../assets/img/workco-logo.svg';
 import loadingGif from '../../../assets/img/loading.gif';
@@ -13,7 +14,7 @@ import loadingGif from '../../../assets/img/loading.gif';
 
 const ANIMATION_DURAION = 500;
 
-
+@withScroll
 @breakpoint
 @connect(state => ({
   breakpoint: state.app.get('breakpoint'),
@@ -25,6 +26,7 @@ export default class Test extends Component {
     breakpoint: PropTypes.string,
     usersData: PropTypes.array,
     fetchUsersLoading: PropTypes.bool,
+    scrollPosition: PropTypes.number,
     dispatch: PropTypes.func,
   }
 
@@ -111,10 +113,11 @@ export default class Test extends Component {
         /></div>
       );
     }
+    const headerBorder = this.props.scrollPosition ? 'headerBorder' : '';
 
     return (
       <div className='Dashboard'>
-        <div className='hedder'>
+        <div className={ `header ${ headerBorder }` }>
           <div className='logoGroup'>
             <img
               src={ workAndCoLogoImg }

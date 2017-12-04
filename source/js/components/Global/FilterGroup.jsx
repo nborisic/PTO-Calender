@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sortDropdownArray } from 'utils/global';
 import { addFilter, removeFilter } from 'actions/filter';
+import filterSvg from '../../../assets/img/filterButton.svg';
 
 @connect(state => ({
   filter: state.filter.get('filter'),
@@ -157,6 +158,28 @@ export default class FilterGroup extends Component {
     }
   }
 
+  handleHighlightDiv(noToBe, itemsCount) {
+    const { newProjects, newLocation, newDiscipline, newEmployees } = this.state;
+    const projectsCount = newProjects.length;
+    const locationCount = newLocation.length;
+    const disciplineCount = newDiscipline.length;
+    const employeeCount = newEmployees.length;
+    let heiglightPart;
+    if (projectsCount && new RegExp(`[0-${ projectsCount - 1 }]`).test(noToBe)) {
+      heiglightPart = `PROJECT${ noToBe }`;
+    } else if (locationCount && new RegExp(`[${ projectsCount }-${ projectsCount + (locationCount - 1) }]`).test(noToBe)) {
+      const noAddOn = noToBe - projectsCount;
+      heiglightPart = `LOCATION${ noAddOn }`;
+    } else if (disciplineCount && new RegExp(`[${ projectsCount + locationCount }-${ projectsCount + locationCount + (disciplineCount - 1) }]`).test(noToBe)) {
+      const noAddOn = noToBe - projectsCount - locationCount;
+      heiglightPart = `DISCIPLINE${ noAddOn }`;
+    } else if (employeeCount && new RegExp(`[${ projectsCount + locationCount + disciplineCount }-${ itemsCount - 1 }]`).test(noToBe)) {
+      const noAddOn = noToBe - projectsCount - locationCount - disciplineCount;
+      heiglightPart = `EMPLOYEES${ noAddOn }`;
+    }
+    return heiglightPart;
+  }
+
   handleArrowPress(e) {
     if (this.state.inputValue === '') return;
     const { newProjects, newLocation, newDiscipline, newEmployees } = this.state;
@@ -164,25 +187,9 @@ export default class FilterGroup extends Component {
     const itemsCount = stateArray.reduce((acc, cur) => {
       return acc + cur.length;
     }, 0);
-    const projectsCount = newProjects.length;
-    const locationCount = newLocation.length;
-    const disciplineCount = newDiscipline.length;
-    const employeeCount = newEmployees.length;
     if (e.which === 40) {
       const noToBe = this.state.highlightCounter + 1 === itemsCount ? 0 : this.state.highlightCounter + 1;
-      let heiglightPart;
-      if (projectsCount && new RegExp(`[0-${ projectsCount - 1 }]`).test(noToBe)) {
-        heiglightPart = `PROJECT${ noToBe }`;
-      } else if (locationCount && new RegExp(`[${ projectsCount }-${ projectsCount + (locationCount - 1) }]`).test(noToBe)) {
-        const noAddOn = noToBe - projectsCount;
-        heiglightPart = `LOCATION${ noAddOn }`;
-      } else if (disciplineCount && new RegExp(`[${ projectsCount + locationCount }-${ projectsCount + locationCount + (disciplineCount - 1) }]`).test(noToBe)) {
-        const noAddOn = noToBe - projectsCount - locationCount;
-        heiglightPart = `DISCIPLINE${ noAddOn }`;
-      } else if (employeeCount && new RegExp(`[${ projectsCount + locationCount + disciplineCount }-${ itemsCount - 1 }]`).test(noToBe)) {
-        const noAddOn = noToBe - projectsCount - locationCount - disciplineCount;
-        heiglightPart = `EMPLOYEES${ noAddOn }`;
-      }
+      const heiglightPart = this.handleHighlightDiv(noToBe, itemsCount);
       this.setState({
         heiglightPart,
         highlightCounter: noToBe % itemsCount,
@@ -190,38 +197,14 @@ export default class FilterGroup extends Component {
     } else if (e.which === 38) {
       if (this.state.highlightCounter === 0 || this.state.highlightCounter === -1) {
         const noToBe = itemsCount - 1;
-        let heiglightPart;
-        if (projectsCount && new RegExp(`[0-${ projectsCount - 1 }]`).test(noToBe)) {
-          heiglightPart = `PROJECT${ noToBe }`;
-        } else if (locationCount && new RegExp(`[${ projectsCount }-${ projectsCount + (locationCount - 1) }]`).test(noToBe)) {
-          const noAddOn = noToBe - projectsCount;
-          heiglightPart = `LOCATION${ noAddOn }`;
-        } else if (disciplineCount && new RegExp(`[${ projectsCount + locationCount }-${ projectsCount + locationCount + (disciplineCount - 1) }]`).test(noToBe)) {
-          const noAddOn = noToBe - projectsCount - locationCount;
-          heiglightPart = `DISCIPLINE${ noAddOn }`;
-        } else if (employeeCount && new RegExp(`[${ projectsCount + locationCount + disciplineCount }-${ itemsCount - 1 }]`).test(noToBe)) {
-          const noAddOn = noToBe - projectsCount - locationCount - disciplineCount;
-          heiglightPart = `EMPLOYEES${ noAddOn }`;
-        }
+        const heiglightPart = this.handleHighlightDiv(noToBe, itemsCount);
         this.setState({
           heiglightPart,
           highlightCounter: itemsCount - 1,
         });
       } else {
         const noToBe = this.state.highlightCounter - 1 === itemsCount ? 0 : this.state.highlightCounter - 1;
-        let heiglightPart;
-        if (projectsCount && new RegExp(`[0-${ projectsCount - 1 }]`).test(noToBe)) {
-          heiglightPart = `PROJECT${ noToBe }`;
-        } else if (locationCount && new RegExp(`[${ projectsCount }-${ projectsCount + (locationCount - 1) }]`).test(noToBe)) {
-          const noAddOn = noToBe - projectsCount;
-          heiglightPart = `LOCATION${ noAddOn }`;
-        } else if (disciplineCount && new RegExp(`[${ projectsCount + locationCount }-${ projectsCount + locationCount + (disciplineCount - 1) }]`).test(noToBe)) {
-          const noAddOn = noToBe - projectsCount - locationCount;
-          heiglightPart = `DISCIPLINE${ noAddOn }`;
-        } else if (employeeCount && new RegExp(`[${ projectsCount + locationCount + disciplineCount }-${ itemsCount - 1 }]`).test(noToBe)) {
-          const noAddOn = noToBe - projectsCount - locationCount - disciplineCount;
-          heiglightPart = `EMPLOYEES${ noAddOn }`;
-        }
+        const heiglightPart = this.handleHighlightDiv(noToBe, itemsCount);
         this.setState({
           heiglightPart,
           highlightCounter: (this.state.highlightCounter - 1) % itemsCount,
@@ -416,7 +399,9 @@ export default class FilterGroup extends Component {
             <button
               className={ buttonClass }
               onClick={ this.handleFilterClick }
-            />
+            >
+              <img src={ filterSvg } alt='filterButton' />
+            </button>
             <div className='filterDrop'>
               <div>
                 <input
