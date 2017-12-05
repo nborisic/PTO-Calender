@@ -250,22 +250,16 @@ button:disabled {
     }
   }
 
-.testing:hover {
-    fill: red;
-    //background-image: url(../assets/img/filterButtonHover.svg);
-  }
   .addFilter {
-
+    &:hover #Oval {
+      fill: #EC1C24;
+    }
     align-self: center;
-    //background-image: url(../assets/img/filterButton.svg);
-    //background-position: center center;
-    //background-repeat: no-repeat;
-    //background-size: cover;
     padding: 0px;
     border: none;
     outline: none;
-    width: 27px;
-    height: 27px;
+    width: 30px;
+    height: 30px;
   }
   .rotate {
     @extend .addFilter;
@@ -365,13 +359,10 @@ button:disabled {
 .rightButton {
   border: none;
   outline: none;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  &:hover {
-    background-image: url(../assets/img/rightHover.svg);
+  &:hover #Rectangle-6 {
+    fill: #EC1C24;
   }
-  background-image: url(../assets/img/right.svg);
+  padding: 0px;
   margin-left: 10px;
   height: 30px;
   width: 30px;
