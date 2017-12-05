@@ -186,7 +186,7 @@ export default class FilterGroup extends Component {
     const itemsCount = stateArray.reduce((acc, cur) => {
       return acc + cur.length;
     }, 0);
-    if (e.which === 40) {
+    if (e.which === 40) { // keyCodes.ARROW_DOWN
       const noToBe = this.state.highlightCounter + 1 === itemsCount ? 0 : this.state.highlightCounter + 1;
       const heiglightPart = this.handleHighlightDiv(noToBe, itemsCount);
       this.setState({
@@ -208,6 +208,7 @@ export default class FilterGroup extends Component {
           heiglightPart,
           highlightCounter: (this.state.highlightCounter - 1) % itemsCount,
         });
+        // element.scrollTop = highlightCounter * singleItemElement.offsetHeight
       }
     } else if (e.which === 13) {
       this.setState({

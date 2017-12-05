@@ -34,26 +34,26 @@ export default class EmplyeeRow extends Component {
   renderDates(allWeeks, breakpoint) {
     const weekDays = [];
     const monthArray = [];
+    let countInitial = 0;
     const containerWidth = breakpoint === 'mobile' ? 100 / 3 : 100 / 12;
     allWeeks.map((oneWeek, index) => {
-      const oneWeekDay = [];
-      let setOnFour;
-      if (breakpoint === 'mobile' || /^[1-7]$/.test(oneWeek[0].format('D'))) {
+      let oneWeekDay;
+      if (index === 4 || index === 8 || (index === 0 && !countInitial) || breakpoint === 'mobile' || /^[1-7]$/.test(oneWeek[0].format('D'))) {
         monthArray.push(oneWeek[0].format('MMM'));
-        oneWeekDay.push(<div key={ `${ index }` } >{ oneWeek[0].format('MMM') }</div>);
-        if (index === 4) {
-          setOnFour = true;
-        }
+        oneWeekDay = <div key={ `${ index }` } >{ oneWeek[0].format('MMM') }</div>;
+        weekDays.push(
+          <div
+            key={ index }
+            style={ {
+              width: `${ containerWidth }%`,
+              transform: `translateX(${ (index - countInitial) * 100 }%)`,
+            } }
+          >
+            <div className='monthContainer'>{ oneWeekDay }</div>
+          </div>
+        );
+        countInitial += 1;
       }
-
-      if (index === 4 && !setOnFour) {
-        oneWeekDay.push(<div key={ `jump${ index }` } >{ oneWeek[0].format('MMM') }</div>);
-      }
-      weekDays.push(
-        <div key={ index } style={ { width: `${ containerWidth }%` } }>
-          <div className='monthContainer'>{ oneWeekDay }</div>
-        </div>
-      );
       return true;
     });
     this.setState({
@@ -77,7 +77,6 @@ export default class EmplyeeRow extends Component {
         transform = monthArray[1] === monthArray[2] ? `translateX(-${ 100 / 3 }%)` : transform;
       }
     }
-
 
     return (
       <div className='employeeContainer'>
