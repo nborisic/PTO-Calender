@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 
-const ANIMATION_DURAION = 2500;
-
+const ANIMATION_DURAION = 500;
 
 export default class EmplyeeRow extends Component {
   static propTypes = {
@@ -15,11 +14,16 @@ export default class EmplyeeRow extends Component {
   constructor() {
     super();
 
+    const styles = Array(12).fill({
+      transform: null,
+    });
+
     this.state = {
       months: [],
       monthArray: [],
       startingIndex: [],
       startIndexOfCutMonth: 0,
+      styles,
     };
 
     this.renderDates = this.renderDates.bind(this);
@@ -32,84 +36,84 @@ export default class EmplyeeRow extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.renderDates(nextProps.allWeeks, nextProps.breakpoint);
-    this.moveItem(nextProps.animate, nextProps.breakpoint);
+    this.moveItem(nextProps.animate, nextProps.breakpoint, nextProps.allWeeks);
   }
 
-  moveItem = (animation, breakpoint) => {
+  moveItem = (animation, breakpoint, allWeeks) => {
     const { startingIndex, startIndexOfCutMonth } = this.state;
-    //  console.log('iz recivea', this.divArray);
     const refDivs = this.divArray;
     const filterdDivs = refDivs.filter(item => item);
-    // console.log(refDivs);
-    console.log('startingIndex - Current state: ', this.state.startingIndex);
+    const newStyles = [];
+    for (let k = 0; k < 12; k++) {
+      newStyles.push({
+        transform: null,
+      });
+    }
     if (animation === 'left' && breakpoint !== 'mobile') {
       if (filterdDivs.length === 4) {
-        refDivs[this.state.startingIndex[0]].style.transform = `translateX(${ (startingIndex[0] + 4) * 100 }%)`;
-        refDivs[this.state.startingIndex[0]].style.transition = 'transform 2500ms ease-in-out';
-
-        refDivs[this.state.startingIndex[1]].style.transform = `translateX(${ (startingIndex[1] + startIndexOfCutMonth - 1) * 100 }%)`;
-        refDivs[this.state.startingIndex[1]].style.transition = 'transform 2500ms ease-in-out';
-
-        refDivs[this.state.startingIndex[2]].style.transform = `translateX(${ (startingIndex[2] + 4 + 2) * 100 }%)`;
-        refDivs[this.state.startingIndex[2]].style.transition = 'transform 2500ms ease-in-out';
+        if (refDivs[startingIndex[1]].textContent === refDivs[startingIndex[0]].textContent) {
+          newStyles[startingIndex[0]].transform = '';
+        } else {
+          newStyles[startingIndex[0]].transform = `translateX(${ (startingIndex[0] + 4) * 100 }%)`;
+        }
+        if (refDivs[startingIndex[1]].textContent === refDivs[startingIndex[0]].textContent) {
+          newStyles[startingIndex[1]].transform = '300%';
+        } else {
+          newStyles[startingIndex[1]].transform = `translateX(${ (startingIndex[1] + startIndexOfCutMonth - 1) * 100 }%)`;
+        }
+        newStyles[startingIndex[2]].transform = `translateX(${ (startingIndex[2] + 4 + 2) * 100 }%)`;
       } else {
-        refDivs[this.state.startingIndex[0]].style.transform = `translateX(${ (startingIndex[0] + 4) * 100 }%)`;
-        refDivs[this.state.startingIndex[0]].style.transition = 'transform 2500ms ease-in-out';
-
-        refDivs[this.state.startingIndex[1]].style.transform = `translateX(${ (startingIndex[1] + 4 - startIndexOfCutMonth + 1) * 100 }%)`;
-        refDivs[this.state.startingIndex[1]].style.transition = 'transform 2500ms ease-in-out';
-
-        refDivs[this.state.startingIndex[2]].style.transform = `translateX(${ (startingIndex[2] + 4 + 2) * 100 }%)`;
-        refDivs[this.state.startingIndex[2]].style.transition = 'transform 2500ms ease-in-out';
+        if (refDivs[startingIndex[1]].textContent === refDivs[startingIndex[0]].textContent) {
+          newStyles[startingIndex[0]].transform = `translateX(${ (startingIndex[0] + 4) * 100 }%)`;
+        } else {
+          newStyles[startingIndex[0]].transform = `translateX(${ (startingIndex[0] + 4) * 100 }%)`;
+        }
+        newStyles[startingIndex[1]].transform = `translateX(${ (startingIndex[1] + 4 - startIndexOfCutMonth + 1) * 100 }%)`;
+        newStyles[startingIndex[2]].transform = `translateX(${ (startingIndex[2] + 4 + 2) * 100 }%)`;
       }
     }
     if (animation === 'right' && breakpoint !== 'mobile') {
       if (filterdDivs.length === 4) {
-        refDivs[this.state.startingIndex[0]].style.transform = `translateX(${ (startingIndex[0] - 4) * 100 }%)`;
-        refDivs[this.state.startingIndex[0]].style.transition = 'transform 2500ms ease-in-out';
-
-        refDivs[this.state.startingIndex[1]].style.transform = `translateX(${ (startingIndex[1] - 4) * 100 }%)`;
-        refDivs[this.state.startingIndex[1]].style.transition = 'transform 2500ms ease-in-out';
-
-        refDivs[this.state.startingIndex[2]].style.transform = `translateX(${ (4 - 2) * 100 }%)`;
-        refDivs[this.state.startingIndex[2]].style.transition = 'transform 2500ms ease-in-out';
-
-        refDivs[this.state.startingIndex[3]].style.transform = `translateX(${ (startingIndex[3] - 4 - 3) * 100 }%)`;
-        refDivs[this.state.startingIndex[3]].style.transition = 'transform 2500ms ease-in-out';
-      } else {
-        refDivs[this.state.startingIndex[0]].style.transform = `translateX(${ (startingIndex[0] - 4) * 100 }%)`;
-        refDivs[this.state.startingIndex[0]].style.transition = 'transform 2500ms ease-in-out';
-
-        if (startingIndex[2] - startingIndex[1] === 5) {
-          refDivs[this.state.startingIndex[1]].style.transform = `translateX(${ (4 - 1) * 100 }%)`;
-          refDivs[this.state.startingIndex[1]].style.transition = 'transform 2500ms ease-in-out';
+        if (refDivs[startingIndex[1]].textContent === refDivs[startingIndex[0]].textContent) {
+          refDivs[startingIndex[0]].transform = '';
         } else {
-          refDivs[this.state.startingIndex[1]].style.transform = `translateX(${ (startingIndex[1] - 4 - 1) * 100 }%)`;
-          refDivs[this.state.startingIndex[1]].style.transition = 'transform 2500ms ease-in-out';
+          newStyles[startingIndex[0]].transform = `translateX(${ (startingIndex[0] - 4) * 100 }%)`;
+        }
+        newStyles[startingIndex[1]].transform = `translateX(${ (startingIndex[1] - 4 - 1) * 100 }%)`;
+        newStyles[startingIndex[2]].transform = `translateX(${ (4 - 2) * 100 }%)`;
+        newStyles[startingIndex[3]].transform = `translateX(${ (startingIndex[3] - 4 - 3) * 100 }%)`;
+      } else {
+        newStyles[startingIndex[0]].transform = `translateX(${ (startingIndex[0] - 4) * 100 }%)`;
+        if (startingIndex[2] - startingIndex[1] === 5) {
+          newStyles[startingIndex[1]].transform = `translateX(${ (4 - 1) * 100 }%)`;
+        } else {
+          newStyles[startingIndex[1]].transform = `translateX(${ (startingIndex[1] - 4 - 1) * 100 }%)`;
         }
         if (startingIndex[2] < 8) {
-          refDivs[this.state.startingIndex[2]].style.transform = `translateX(${ (4 - 2) * 100 }%)`;
-          refDivs[this.state.startingIndex[2]].style.transition = 'transform 2500ms ease-in-out';
+          newStyles[startingIndex[2]].transform = `translateX(${ (4 - 2) * 100 }%)`;
         } else {
-          refDivs[this.state.startingIndex[2]].style.transform = `translateX(${ (startingIndex[2] - 4 - 2) * 100 }%)`;
-          refDivs[this.state.startingIndex[2]].style.transition = 'transform 2500ms ease-in-out';
+          newStyles[startingIndex[2]].transform = `translateX(${ (startingIndex[2] - 4 - 2) * 100 }%)`;
         }
       }
     }
+    this.setState({
+      styles: newStyles,
+    }, () => {
+      this.renderDates(allWeeks, breakpoint);
+    });
   }
 
   renderDates(allWeeks, breakpoint) {
+    const { styles } = this.state;
     const weekDays = [];
     const monthArray = [];
     const startingIndex = [];
     let countInitial = 0;
     const containerWidth = breakpoint === 'mobile' ? 100 / 3 : 100 / 12;
+    let startIndexOfCutMonth = 0;
     for (let index = 0; index < allWeeks.length; index++) {
       if (index < 4 && /^[1-7]$/.test(allWeeks[index][0].format('D'))) {
-        this.setState({
-          startIndexOfCutMonth: index,
-        });
+        startIndexOfCutMonth = index;
       }
       if (index < 4 && countInitial && breakpoint !== 'mobile') {
         continue;
@@ -124,12 +128,16 @@ export default class EmplyeeRow extends Component {
         monthArray.push(month);
         startingIndex.push(index);
         oneWeekDay = <div key={ `${ month + index }` } >{ month }</div>;
+        const hasAnimation = (breakpoint === 'mobile' ? null : styles[index].transform);
+        const defaultPosition = (breakpoint === 'mobile' ? null : `translateX(${ (index - countInitial) * 100 }%)`);
+        const divPosition = hasAnimation || defaultPosition;
         weekDays.push(
           <div
             key={ `${ month + index }` }
             style={ {
               width: `${ containerWidth }%`,
-              transform: breakpoint === 'mobile' ? null : `translateX(${ (index - countInitial) * 100 }%)`,
+              transform: divPosition,
+              transition: styles[index].transform && 'transform 500ms ease-in-out',
             } }
             ref={ div => this.divArray[index] = div }
           >
@@ -140,6 +148,7 @@ export default class EmplyeeRow extends Component {
       }
     }
     this.setState({
+      startIndexOfCutMonth,
       startingIndex,
       monthArray,
       months: weekDays,

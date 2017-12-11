@@ -51,6 +51,9 @@ export default class FilterGroup extends Component {
   }
 
   setDropdownItem(e) {
+    // element.scrollTop = highlightCounter * singleItemElement.offsetHeight
+    console.log(e.target.scrollTop);
+    console.log(e.target.offsetTop);
     const { dispatch } = this.props;
     const { projects, discipline, location, empolyees } = this.state;
     const newElement = (
@@ -157,24 +160,24 @@ export default class FilterGroup extends Component {
     }
   }
 
-  handleHighlightDiv(noToBe, itemsCount) {
+  handleHighlightDiv(numberToBe, itemsCount) {
     const { newProjects, newLocation, newDiscipline, newEmployees } = this.state;
     const projectsCount = newProjects.length;
     const locationCount = newLocation.length;
     const disciplineCount = newDiscipline.length;
     const employeeCount = newEmployees.length;
     let heiglightPart;
-    if (projectsCount && new RegExp(`[0-${ projectsCount - 1 }]`).test(noToBe)) {
-      heiglightPart = `PROJECT${ noToBe }`;
-    } else if (locationCount && new RegExp(`[${ projectsCount }-${ projectsCount + (locationCount - 1) }]`).test(noToBe)) {
-      const noAddOn = noToBe - projectsCount;
-      heiglightPart = `LOCATION${ noAddOn }`;
-    } else if (disciplineCount && new RegExp(`[${ projectsCount + locationCount }-${ projectsCount + locationCount + (disciplineCount - 1) }]`).test(noToBe)) {
-      const noAddOn = noToBe - projectsCount - locationCount;
-      heiglightPart = `DISCIPLINE${ noAddOn }`;
-    } else if (employeeCount && new RegExp(`[${ projectsCount + locationCount + disciplineCount }-${ itemsCount - 1 }]`).test(noToBe)) {
-      const noAddOn = noToBe - projectsCount - locationCount - disciplineCount;
-      heiglightPart = `EMPLOYEES${ noAddOn }`;
+    if (projectsCount && new RegExp(`[0-${ projectsCount - 1 }]`).test(numberToBe)) {
+      heiglightPart = `PROJECT${ numberToBe }`;
+    } else if (locationCount && new RegExp(`[${ projectsCount }-${ projectsCount + (locationCount - 1) }]`).test(numberToBe)) {
+      const numberAddOn = numberToBe - projectsCount;
+      heiglightPart = `LOCATION${ numberAddOn }`;
+    } else if (disciplineCount && new RegExp(`[${ projectsCount + locationCount }-${ projectsCount + locationCount + (disciplineCount - 1) }]`).test(numberToBe)) {
+      const numberAddOn = numberToBe - projectsCount - locationCount;
+      heiglightPart = `DISCIPLINE${ numberAddOn }`;
+    } else if (employeeCount && new RegExp(`[${ projectsCount + locationCount + disciplineCount }-${ itemsCount - 1 }]`).test(numberToBe)) {
+      const numberAddOn = numberToBe - projectsCount - locationCount - disciplineCount;
+      heiglightPart = `EMPLOYEES${ numberAddOn }`;
     }
     return heiglightPart;
   }
@@ -187,30 +190,29 @@ export default class FilterGroup extends Component {
       return acc + cur.length;
     }, 0);
     if (e.which === 40) { // keyCodes.ARROW_DOWN
-      const noToBe = this.state.highlightCounter + 1 === itemsCount ? 0 : this.state.highlightCounter + 1;
-      const heiglightPart = this.handleHighlightDiv(noToBe, itemsCount);
+      const numberToBe = this.state.highlightCounter + 1 === itemsCount ? 0 : this.state.highlightCounter + 1;
+      const heiglightPart = this.handleHighlightDiv(numberToBe, itemsCount);
       this.setState({
         heiglightPart,
-        highlightCounter: noToBe % itemsCount,
+        highlightCounter: numberToBe % itemsCount,
       });
-    } else if (e.which === 38) {
+    } else if (e.which === 38) { // keyCodes.ARROW_UP
       if (this.state.highlightCounter === 0 || this.state.highlightCounter === -1) {
-        const noToBe = itemsCount - 1;
-        const heiglightPart = this.handleHighlightDiv(noToBe, itemsCount);
+        const numberToBe = itemsCount - 1;
+        const heiglightPart = this.handleHighlightDiv(numberToBe, itemsCount);
         this.setState({
           heiglightPart,
           highlightCounter: itemsCount - 1,
         });
       } else {
-        const noToBe = this.state.highlightCounter - 1 === itemsCount ? 0 : this.state.highlightCounter - 1;
-        const heiglightPart = this.handleHighlightDiv(noToBe, itemsCount);
+        const numberToBe = this.state.highlightCounter - 1 === itemsCount ? 0 : this.state.highlightCounter - 1;
+        const heiglightPart = this.handleHighlightDiv(numberToBe, itemsCount);
         this.setState({
           heiglightPart,
           highlightCounter: (this.state.highlightCounter - 1) % itemsCount,
         });
-        // element.scrollTop = highlightCounter * singleItemElement.offsetHeight
       }
-    } else if (e.which === 13) {
+    } else if (e.which === 13) { // keyCodes.ENTER
       this.setState({
         selectItem: true,
       });
@@ -328,6 +330,7 @@ export default class FilterGroup extends Component {
         stateParts.map((statePart, i) => {
           const fucusedElement = this.state.heiglightPart === `${ label }${ i }`;
           const buttonClass = fucusedElement ? 'arrowHiglight' : '';
+
           if (fucusedElement && this.state.selectItem) {
             const e = {
               target: {
@@ -389,6 +392,12 @@ export default class FilterGroup extends Component {
       document.addEventListener('click', this.handleOffClick);
     } else {
       document.removeEventListener('click', this.handleOffClick);
+    }
+
+    const dropMenu = document.getElementsByClassName('dropMenu');
+    const highlightedDiv = document.getElementsByClassName('arrowHiglight');
+    if (dropMenu[0] && highlightedDiv[0]) {
+      highlightedDiv[0].offsetTop < 131 ? dropMenu[0].scrollTop = 0 : dropMenu[0].scrollTop = highlightedDiv[0].offsetTop - 42;
     }
     return (
       <div className='filterGroup'>

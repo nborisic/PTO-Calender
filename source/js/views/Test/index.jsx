@@ -12,7 +12,7 @@ import workAndCoLogoImg from '../../../assets/img/workco-logo.svg';
 import loadingGif from '../../../assets/img/loading.gif';
 
 
-const ANIMATION_DURAION = 2500;
+const ANIMATION_DURAION = 500;
 
 @withScroll
 @breakpoint
