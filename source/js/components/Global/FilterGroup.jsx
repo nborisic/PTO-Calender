@@ -23,7 +23,6 @@ export default class FilterGroup extends Component {
       openDropdown: false,
 
       highlightCounter: -1,
-      selectItem: false,
 
       discipline: null,
       location: null,
@@ -50,10 +49,11 @@ export default class FilterGroup extends Component {
     this.setDropdown();
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    this.manageScroll(nextState);
+  }
+
   setDropdownItem(e) {
-    // element.scrollTop = highlightCounter * singleItemElement.offsetHeight
-    console.log(e.target.scrollTop);
-    console.log(e.target.offsetTop);
     const { dispatch } = this.props;
     const { projects, discipline, location, empolyees } = this.state;
     const newElement = (
@@ -108,7 +108,6 @@ export default class FilterGroup extends Component {
       location: newLocationState,
       discipline: newDisciplineState,
       empolyees: newEmployeesState,
-      selectItem: false,
       heiglightPart: '',
       highlightCounter: -1,
       buttonsArray,
@@ -160,6 +159,50 @@ export default class FilterGroup extends Component {
     }
   }
 
+  manageScroll(nextState) {
+    if (nextState.heiglightPart) {
+      const dropMenu = this.dropMenu;
+      const itemFocused = nextState.heiglightPart;
+
+      const category = itemFocused.replace(/\d/g, '');
+      const numberOfItem = itemFocused.replace(/\D/g, '');
+
+      const disciplineCount = nextState.newDiscipline.length;
+      const locationCount = nextState.newLocation.length;
+      const projectsCount = nextState.newProjects.length;
+
+      const countArray = [projectsCount, disciplineCount, locationCount];
+      let numberOfCategories;
+      let beforeItems;
+      switch (category) {
+        case 'PROJECT':
+          dropMenu.scrollTop = (numberOfItem * 38);
+          break;
+        case 'DISCIPLINE':
+          beforeItems = (projectsCount * 38) + (projectsCount ? 47 : 0);
+          dropMenu.scrollTop = (numberOfItem * 38) + beforeItems;
+          break;
+        case 'LOCATION':
+          numberOfCategories = 0;
+          for (let i = 0; i < 2; i++) {
+            if (countArray[i] !== 0) { numberOfCategories += 1; }
+          }
+          beforeItems = ((projectsCount + disciplineCount) * 38) + (47 * numberOfCategories);
+          dropMenu.scrollTop = (numberOfItem * 38) + beforeItems;
+          break;
+        case 'EMPLOYEES':
+          numberOfCategories = 0;
+          for (let i = 0; i < 3; i++) {
+            if (countArray[i] !== 0) { numberOfCategories += 1; }
+          }
+          beforeItems = ((projectsCount + disciplineCount + locationCount) * 38) + (47 * numberOfCategories);
+          dropMenu.scrollTop = (numberOfItem * 38) + beforeItems;
+          break;
+        default:
+      }
+    }
+  }
+
   handleHighlightDiv(numberToBe, itemsCount) {
     const { newProjects, newLocation, newDiscipline, newEmployees } = this.state;
     const projectsCount = newProjects.length;
@@ -167,15 +210,15 @@ export default class FilterGroup extends Component {
     const disciplineCount = newDiscipline.length;
     const employeeCount = newEmployees.length;
     let heiglightPart;
-    if (projectsCount && new RegExp(`[0-${ projectsCount - 1 }]`).test(numberToBe)) {
+    if (projectsCount && numberToBe >= 0 && numberToBe <= (projectsCount - 1)) {
       heiglightPart = `PROJECT${ numberToBe }`;
-    } else if (locationCount && new RegExp(`[${ projectsCount }-${ projectsCount + (locationCount - 1) }]`).test(numberToBe)) {
+    } else if (disciplineCount && numberToBe >= projectsCount && numberToBe <= (projectsCount + (disciplineCount - 1))) {
       const numberAddOn = numberToBe - projectsCount;
-      heiglightPart = `LOCATION${ numberAddOn }`;
-    } else if (disciplineCount && new RegExp(`[${ projectsCount + locationCount }-${ projectsCount + locationCount + (disciplineCount - 1) }]`).test(numberToBe)) {
-      const numberAddOn = numberToBe - projectsCount - locationCount;
       heiglightPart = `DISCIPLINE${ numberAddOn }`;
-    } else if (employeeCount && new RegExp(`[${ projectsCount + locationCount + disciplineCount }-${ itemsCount - 1 }]`).test(numberToBe)) {
+    } else if (locationCount && numberToBe >= (projectsCount + disciplineCount) && numberToBe <= (projectsCount + disciplineCount + (locationCount - 1))) {
+      const numberAddOn = numberToBe - projectsCount - disciplineCount;
+      heiglightPart = `LOCATION${ numberAddOn }`;
+    } else if (employeeCount && numberToBe >= (projectsCount + locationCount + disciplineCount) && numberToBe <= (itemsCount - 1)) {
       const numberAddOn = numberToBe - projectsCount - locationCount - disciplineCount;
       heiglightPart = `EMPLOYEES${ numberAddOn }`;
     }
@@ -213,9 +256,18 @@ export default class FilterGroup extends Component {
         });
       }
     } else if (e.which === 13) { // keyCodes.ENTER
-      this.setState({
-        selectItem: true,
-      });
+      const selectedElement = document.querySelector('.arrowHiglight');
+      const value = selectedElement.value;
+      const category = selectedElement.dataset.category;
+      const selectedObj = {
+        target: {
+          value,
+          dataset: {
+            category,
+          },
+        },
+      };
+      this.setDropdownItem(selectedObj);
     }
   }
 
@@ -330,18 +382,6 @@ export default class FilterGroup extends Component {
         stateParts.map((statePart, i) => {
           const fucusedElement = this.state.heiglightPart === `${ label }${ i }`;
           const buttonClass = fucusedElement ? 'arrowHiglight' : '';
-
-          if (fucusedElement && this.state.selectItem) {
-            const e = {
-              target: {
-                value: statePart,
-                dataset: {
-                  category: label,
-                },
-              },
-            };
-            this.setDropdownItem(e);
-          }
           return (
             <button
               key={ label + i }
@@ -394,11 +434,6 @@ export default class FilterGroup extends Component {
       document.removeEventListener('click', this.handleOffClick);
     }
 
-    const dropMenu = document.getElementsByClassName('dropMenu');
-    const highlightedDiv = document.getElementsByClassName('arrowHiglight');
-    if (dropMenu[0] && highlightedDiv[0]) {
-      highlightedDiv[0].offsetTop < 131 ? dropMenu[0].scrollTop = 0 : dropMenu[0].scrollTop = highlightedDiv[0].offsetTop - 42;
-    }
     return (
       <div className='filterGroup'>
         <span>Filter by:</span>
@@ -426,14 +461,17 @@ export default class FilterGroup extends Component {
                   value={ this.state.inputValue }
                   className={ inputClass }
                   placeholder='Filter by project, discipline, or location'
-                  ref={ (a) => { this.filterInput = a; } }
+                  ref={ a => { this.filterInput = a; } }
                 />
                 <button
                   className={ cancelButtonClass }
                   onClick={ this.handleCancelClick }
                 />
               </div>
-              <div className={ this.state.openDropdown ? 'dropMenu' : 'invisible' }>
+              <div
+                className={ this.state.openDropdown ? 'dropMenu' : 'invisible' }
+                ref={ c => { this.dropMenu = c; } }
+              >
                 { this.renderDropdown() }
               </div>
             </div>
