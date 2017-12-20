@@ -40,7 +40,11 @@ export default class CalendarSlider extends Component {
     this.filterEmployees(nextProps);
   }
 
-
+/**
+ * chenking if all filter values are contained insede employee values
+ * @param { object } employee
+ * @param { object } checkFilter
+ */
   checkEmployee(employee, checkFilter) {
     const statement = [];
     if (checkFilter.key === 'location' || checkFilter.key === 'name') {
@@ -60,9 +64,13 @@ export default class CalendarSlider extends Component {
         counter += 1;
       }
     }
+    // number of filter values equals number of true values that were matched in employee obj
     return counter === checkFilter.value.length;
   }
-
+/**
+ * filtering employees depending on filter selected, returning filted elements back to state
+ * @param { object } nextProps
+ */
   filterEmployees = (nextProps) => {
     const { location, discipline, projects, staff } = nextProps;
     const { allEmployees } = this.props;

@@ -31,7 +31,10 @@ export default class EmplyeeRow extends Component {
   componentWillReceiveProps(nextProps) {
     this.allPtoDates(nextProps.oneEmployee.pto);
   }
-
+/**
+ * formating all days to apropriate categories
+ * @param { object } pto - days on payed leave
+ */
   allPtoDates(pto) {
     let fromDate;
     let endDate;
@@ -64,7 +67,6 @@ export default class EmplyeeRow extends Component {
       const oneWeekDay = [];
       for (let i = 0; i < 5; i++) {
         let ptoType;
-
         for (let k = 0; k < ptoDays.length; k++) {
           const key = Object.keys(ptoDays[k])[0];
           const isPto = ptoDays[k][key].includes(oneWeek[i].format('MM/DD/YYYY'));

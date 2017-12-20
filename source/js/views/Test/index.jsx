@@ -17,7 +17,7 @@ const ANIMATION_DURAION = 500;
 @withScroll
 @breakpoint
 @connect(state => ({
-  breakpoint: state.app.get('breakpoint'),
+  // breakpoint: state.app.get('breakpoint'),
   usersData: state.app.get('fetchUsersData'),
   fetchUsersLoading: state.app.get('fetchUsersLoading'),
 }))
@@ -26,7 +26,7 @@ export default class Test extends Component {
     breakpoint: PropTypes.string,
     usersData: PropTypes.array,
     fetchUsersLoading: PropTypes.bool,
-    scrollPosition: PropTypes.number,
+    scrollPosition: PropTypes.number, // from withScroll decorator
     dispatch: PropTypes.func,
   }
 
@@ -53,6 +53,11 @@ export default class Test extends Component {
     this.getDates(nextProps.breakpoint);
   }
 
+/**
+* functin returns neccessery dates to render depending on the screen width ( mobile, lg ).
+* dates are, using moment, only working days.
+* @param { string } breakpointSize
+*/
   getDates(breakpointSize) {
     const { weeksToJump, startWeek } = this.state;
     const weekToModify = breakpointSize === 'mobile' ? 1 : 4;
@@ -86,6 +91,12 @@ export default class Test extends Component {
     });
   }
 
+
+/**
+ * on scroll button clicks determens direction of sliding
+ * depending on the brakpoing slides 1 or 4 working weeks
+ * @param { number } number
+ */
   offsetCalendar(number) {
     if (this.state.animate) {
       return;
@@ -113,6 +124,7 @@ export default class Test extends Component {
         /></div>
       );
     }
+    // if scrolled, inserts a breaking line
     const headerBorder = this.props.scrollPosition ? 'headerBorder' : '';
 
     return (

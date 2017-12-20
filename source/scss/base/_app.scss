@@ -260,6 +260,8 @@ button:disabled {
     outline: none;
     width: 30px;
     height: 30px;
+    transform: rotate(0deg);
+    transition: transform 1s;
   }
   .rotate {
     @extend .addFilter;
@@ -306,8 +308,16 @@ button:disabled {
         border-bottom: 1px solid #EC1C24;
       }
     }
+    .reverseInput {
+      @extend .filterInput;
+      animation: slideOut 1100ms ease;
+    }
+    @keyframes slideOut {
+      0%   { transform: translateX(0em);}
+      100% { transform: translateX(-19em); }
+    }
     @keyframes slideIn {
-      0%   { transform: translateX(-18em);}
+      0%   { transform: translateX(-19em);}
       100% { transform: translateX(0em); }
     }
     .dropMenu {

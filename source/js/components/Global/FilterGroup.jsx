@@ -35,6 +35,8 @@ export default class FilterGroup extends Component {
       newEmployees: null,
 
       heiglightPart: '',
+      invisible: true,
+      animate: false,
     };
 
     this.handleFilterClick = this.handleFilterClick.bind(this);
@@ -53,6 +55,11 @@ export default class FilterGroup extends Component {
     this.manageScroll(nextState);
   }
 
+/**
+ * when dropdown item is selected, funcition makes new set for selection (without selected item),
+ * creates selected filter, dispatches the filter
+ * @param { object } e
+ */
   setDropdownItem(e) {
     const { dispatch } = this.props;
     const { projects, discipline, location, empolyees } = this.state;
@@ -118,11 +125,16 @@ export default class FilterGroup extends Component {
       newDiscipline: null,
       newLocation: null,
       newEmployees: null,
+      invisible: true,
     });
+    this.dropMenu.scrollTop = 0;
     return true;
   }
 
-  // vadi sve stvari za pocetni dropdown
+/**
+ * when component mounts, takse all posible projects/categories/.../ from employees recived from props
+ * as a starting point for choosing filters
+ */
   setDropdown = () => {
     const { usersData } = this.props;
     const projects = [];
@@ -159,6 +171,10 @@ export default class FilterGroup extends Component {
     }
   }
 
+/**
+ * manage scrolling inside a dropdown menu
+ * @param { object } nextState
+ */
   manageScroll(nextState) {
     if (nextState.heiglightPart) {
       const dropMenu = this.dropMenu;
@@ -174,6 +190,7 @@ export default class FilterGroup extends Component {
       const countArray = [projectsCount, disciplineCount, locationCount];
       let numberOfCategories;
       let beforeItems;
+      // depending on how meny categories there are, and their order, calculates scroll distance
       switch (category) {
         case 'PROJECT':
           dropMenu.scrollTop = (numberOfItem * 38);
@@ -203,6 +220,11 @@ export default class FilterGroup extends Component {
     }
   }
 
+/**
+ * crates a tag that represents a filter part and a serial number in that filter part (PROJECT1, DISCIPLINE2, ...)
+ * @param { number } numberToBe - number of next filter item
+ * @param { number } itemsCount - number of posible filter items
+ */
   handleHighlightDiv(numberToBe, itemsCount) {
     const { newProjects, newLocation, newDiscipline, newEmployees } = this.state;
     const projectsCount = newProjects.length;
@@ -225,6 +247,10 @@ export default class FilterGroup extends Component {
     return heiglightPart;
   }
 
+/**
+ * manages keyboard events on input
+ * @param { object } e - event obj
+ */
   handleArrowPress(e) {
     if (this.state.inputValue === '') return;
     const { newProjects, newLocation, newDiscipline, newEmployees } = this.state;
@@ -232,14 +258,14 @@ export default class FilterGroup extends Component {
     const itemsCount = stateArray.reduce((acc, cur) => {
       return acc + cur.length;
     }, 0);
-    if (e.which === 40) { // keyCodes.ARROW_DOWN
+    if (e.keyCode === 40) { // ARROW_DOWN
       const numberToBe = this.state.highlightCounter + 1 === itemsCount ? 0 : this.state.highlightCounter + 1;
       const heiglightPart = this.handleHighlightDiv(numberToBe, itemsCount);
       this.setState({
         heiglightPart,
         highlightCounter: numberToBe % itemsCount,
       });
-    } else if (e.which === 38) { // keyCodes.ARROW_UP
+    } else if (e.keyCode === 38) { // ARROW_UP
       if (this.state.highlightCounter === 0 || this.state.highlightCounter === -1) {
         const numberToBe = itemsCount - 1;
         const heiglightPart = this.handleHighlightDiv(numberToBe, itemsCount);
@@ -255,7 +281,7 @@ export default class FilterGroup extends Component {
           highlightCounter: (this.state.highlightCounter - 1) % itemsCount,
         });
       }
-    } else if (e.which === 13) { // keyCodes.ENTER
+    } else if (e.keyCode === 13) { // ENTER
       const selectedElement = document.querySelector('.arrowHiglight');
       const value = selectedElement.value;
       const category = selectedElement.dataset.category;
@@ -270,7 +296,10 @@ export default class FilterGroup extends Component {
       this.setDropdownItem(selectedObj);
     }
   }
-
+/**
+ * when click is deteced outside dropdown menu, collapses the menu
+ * @param { object } e - event obj
+ */
   handleOffClick(e) {
     if (this.state.openDropdown && e.target.parentElement.className !== 'filterDrop') {
       this.setState({
@@ -278,7 +307,10 @@ export default class FilterGroup extends Component {
       });
     }
   }
-
+/**
+ * on selected filter button, returns filter to the pool of posible filters
+ * @param { object } e - event obj
+ */
   deleteElement(e) {
     const { dispatch } = this.props;
     const { projects, discipline, location, empolyees } = this.state;
@@ -322,28 +354,23 @@ export default class FilterGroup extends Component {
     });
     return true;
   }
-
+/**
+ * dynamicly change the dropdown meny posible filters, depending on the text input
+ * @param { object } e - event obj
+ */
   changeInput(e) {
     const { projects, discipline, location, empolyees } = this.state;
+    const filterWord = (term) => {
+      const termToTest = new RegExp(e.target.value.toUpperCase());
+      return termToTest.test(term.toUpperCase());
+    };
     if (!e.target.value) {
       this.setDropdown();
     } else {
-      const newProjects = projects.filter((term) => {
-        const termToTest = new RegExp(e.target.value.toUpperCase());
-        return termToTest.test(term.toUpperCase());
-      });
-      const newDiscipline = discipline.filter((term) => {
-        const termToTest = new RegExp(e.target.value.toUpperCase());
-        return termToTest.test(term.toUpperCase());
-      });
-      const newLocation = location.filter((term) => {
-        const termToTest = new RegExp(e.target.value.toUpperCase());
-        return termToTest.test(term.toUpperCase());
-      });
-      const newEmployees = empolyees.filter((term) => {
-        const termToTest = new RegExp(e.target.value.toUpperCase());
-        return termToTest.test(term.toUpperCase());
-      });
+      const newProjects = projects.filter((term) => filterWord(term));
+      const newDiscipline = discipline.filter((term) => filterWord(term));
+      const newLocation = location.filter((term) => filterWord(term));
+      const newEmployees = empolyees.filter((term) => filterWord(term));
       this.setState({
         newProjects,
         newDiscipline,
@@ -352,21 +379,38 @@ export default class FilterGroup extends Component {
       });
     }
 
-
     this.setState({
       openDropdown: e.target.value && true,
       inputValue: e.target.value,
     });
   }
 
+ // changing state to manipulate animation of button and input field
   handleFilterClick() {
+    if (this.state.animate) {
+      return;
+    }
+    const click = !this.state.click;
     this.setState({
-      click: true,
+      click,
+      animate: true,
+      invisible: false,
     }, () => {
-      setTimeout(() => { this.filterInput.focus(); }, 1000);
+      setTimeout(() => {
+        this.filterInput.focus();
+        this.setState({
+          animate: false,
+        });
+        if (!this.state.click) {
+          this.setState({
+            animate: false,
+            invisible: true,
+          });
+        }
+      }, 1000);
     });
   }
-
+  // clearing input field of inserted text, and reseting position of heiglighted filter
   handleCancelClick = () => {
     this.setState({
       inputValue: '',
@@ -374,7 +418,11 @@ export default class FilterGroup extends Component {
       highlightCounter: -1,
     });
   }
-
+/**
+ * render one part of dropdown menu ( one category )
+ *  @param { sting } stateParts - category of filter
+ *  @param { sting[] } label - filter value
+ */
   renderDropdownPart = (stateParts, label) => {
     if (stateParts) {
       sortDropdownArray(stateParts);
@@ -398,6 +446,7 @@ export default class FilterGroup extends Component {
     return true;
   }
 
+ // render whole dropdown menu
   renderDropdown = () => {
     const { projects, discipline, location, empolyees, newProjects, newDiscipline, newLocation, newEmployees }
     = this.state;
@@ -425,14 +474,20 @@ export default class FilterGroup extends Component {
 
   render() {
     const buttonClass = this.state.click ? 'rotate' : 'addFilter';
-    const inputClass = this.state.click ? 'filterInput' : 'invisible';
+    let inputClass;
+    if (this.state.invisible) {
+      inputClass = 'invisible';
+    } else {
+      inputClass = this.state.click ? 'filterInput' : 'reverseInput';
+    }
     const cancelButtonClass = this.state.inputValue ? 'cancelInput' : 'invisible';
-
+    // listens for the clicks outside the dropdown menu
     if (this.state.openDropdown) {
       document.addEventListener('click', this.handleOffClick);
     } else {
       document.removeEventListener('click', this.handleOffClick);
     }
+
 
     return (
       <div className='filterGroup'>

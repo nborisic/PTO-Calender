@@ -38,17 +38,23 @@ export default class EmplyeeRow extends Component {
   componentWillReceiveProps(nextProps) {
     this.moveItem(nextProps.animate, nextProps.breakpoint, nextProps.allWeeks);
   }
-
+/**
+ * moving indipendently month tags
+ * @param { string } animation - direction of animation
+ * @param { string } breakpoint
+ * @param { object[] } allWeeks
+ */
   moveItem = (animation, breakpoint, allWeeks) => {
     const { startingIndex, startIndexOfCutMonth } = this.state;
     const refDivs = this.divArray;
     const filterdDivs = refDivs.filter(item => item);
     const newStyles = [];
-    for (let k = 0; k < 12; k++) {
+    for (let k = 0; k < 12; k++) { // 12 weeks
       newStyles.push({
         transform: null,
       });
     }
+    // based on start and end of month in off view, calculating next position and changing styles
     if (animation === 'left' && breakpoint !== 'mobile') {
       if (filterdDivs.length === 4) {
         if (refDivs[startingIndex[1]].textContent === refDivs[startingIndex[0]].textContent) {
@@ -102,7 +108,11 @@ export default class EmplyeeRow extends Component {
       this.renderDates(allWeeks, breakpoint);
     });
   }
-
+/**
+ * renering dates after the animation has been done/ component will mount
+ * @param { string } breakpoint
+ * @param { object[] } allWeeks
+ */
   renderDates(allWeeks, breakpoint) {
     const { styles } = this.state;
     const weekDays = [];
@@ -110,15 +120,21 @@ export default class EmplyeeRow extends Component {
     const startingIndex = [];
     let countInitial = 0;
     const containerWidth = breakpoint === 'mobile' ? 100 / 3 : 100 / 12;
+    // determming the position of first working week in month
     let startIndexOfCutMonth = 0;
     for (let index = 0; index < allWeeks.length; index++) {
       if (index < 4 && /^[1-7]$/.test(allWeeks[index][0].format('D'))) {
         startIndexOfCutMonth = index;
       }
+      // if in off view there is already a month tag, skip to the view port indexes
       if (index < 4 && countInitial && breakpoint !== 'mobile') {
         continue;
       }
       let oneWeekDay;
+      // positioning month tags on firs index in view port ( idex === 4)
+      // on the firs index to be able to slide into a viewport
+      // all three positions in moblie view
+      // on the startgin weeks
       if (index === 4
         || (index === 0 && !countInitial)
         || breakpoint === 'mobile'
