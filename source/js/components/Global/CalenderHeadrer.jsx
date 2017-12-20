@@ -25,9 +25,6 @@ export default class EmplyeeRow extends Component {
       startIndexOfCutMonth: 0,
       styles,
     };
-
-    this.renderDates = this.renderDates.bind(this);
-
     this.divArray = [];
   }
 
@@ -113,7 +110,7 @@ export default class EmplyeeRow extends Component {
  * @param { string } breakpoint
  * @param { object[] } allWeeks
  */
-  renderDates(allWeeks, breakpoint) {
+  renderDates = (allWeeks, breakpoint) => {
     const { styles } = this.state;
     const weekDays = [];
     const monthArray = [];

@@ -17,7 +17,6 @@ const ANIMATION_DURAION = 500;
 @withScroll
 @breakpoint
 @connect(state => ({
-  // breakpoint: state.app.get('breakpoint'),
   usersData: state.app.get('fetchUsersData'),
   fetchUsersLoading: state.app.get('fetchUsersLoading'),
 }))
@@ -68,7 +67,7 @@ export default class Test extends Component {
     if (this.state.weeksToJump > 0) {
       calendarStart = calendarStart.add(weeksToJump, 'week')
       .startOf('isoWeek');
-    } else if (this.state.weeksToJump < 0) {
+    } else {
       calendarStart = calendarStart.subtract(Math.abs(weeksToJump), 'week')
       .startOf('isoWeek');
     }

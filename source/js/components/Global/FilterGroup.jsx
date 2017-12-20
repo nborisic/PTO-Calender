@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sortDropdownArray } from 'utils/global';
 import { addFilter, removeFilter } from 'actions/filter';
+import FilterButton from '../../../assets/svg/filterButton';
 
 @connect(state => ({
   filter: state.filter.get('filter'),
@@ -38,13 +39,6 @@ export default class FilterGroup extends Component {
       invisible: true,
       animate: false,
     };
-
-    this.handleFilterClick = this.handleFilterClick.bind(this);
-    this.setDropdownItem = this.setDropdownItem.bind(this);
-    this.changeInput = this.changeInput.bind(this);
-    this.deleteElement = this.deleteElement.bind(this);
-    this.handleOffClick = this.handleOffClick.bind(this);
-    this.handleArrowPress = this.handleArrowPress.bind(this);
   }
 
   componentWillMount() {
@@ -60,7 +54,7 @@ export default class FilterGroup extends Component {
  * creates selected filter, dispatches the filter
  * @param { object } e
  */
-  setDropdownItem(e) {
+  setDropdownItem = (e) => {
     const { dispatch } = this.props;
     const { projects, discipline, location, empolyees } = this.state;
     const newElement = (
@@ -251,7 +245,7 @@ export default class FilterGroup extends Component {
  * manages keyboard events on input
  * @param { object } e - event obj
  */
-  handleArrowPress(e) {
+  handleArrowPress = (e) => {
     if (this.state.inputValue === '') return;
     const { newProjects, newLocation, newDiscipline, newEmployees } = this.state;
     const stateArray = [newProjects, newLocation, newDiscipline, newEmployees];
@@ -300,7 +294,7 @@ export default class FilterGroup extends Component {
  * when click is deteced outside dropdown menu, collapses the menu
  * @param { object } e - event obj
  */
-  handleOffClick(e) {
+  handleOffClick = (e) => {
     if (this.state.openDropdown && e.target.parentElement.className !== 'filterDrop') {
       this.setState({
         openDropdown: false,
@@ -311,7 +305,7 @@ export default class FilterGroup extends Component {
  * on selected filter button, returns filter to the pool of posible filters
  * @param { object } e - event obj
  */
-  deleteElement(e) {
+  deleteElement = (e) => {
     const { dispatch } = this.props;
     const { projects, discipline, location, empolyees } = this.state;
     let indexOfElement;
@@ -358,7 +352,7 @@ export default class FilterGroup extends Component {
  * dynamicly change the dropdown meny posible filters, depending on the text input
  * @param { object } e - event obj
  */
-  changeInput(e) {
+  changeInput = (e) => {
     const { projects, discipline, location, empolyees } = this.state;
     const filterWord = (term) => {
       const termToTest = new RegExp(e.target.value.toUpperCase());
@@ -380,13 +374,13 @@ export default class FilterGroup extends Component {
     }
 
     this.setState({
-      openDropdown: e.target.value && true,
+      openDropdown: !!e.target.value,
       inputValue: e.target.value,
     });
   }
 
  // changing state to manipulate animation of button and input field
-  handleFilterClick() {
+  handleFilterClick = () => {
     if (this.state.animate) {
       return;
     }
@@ -499,13 +493,7 @@ export default class FilterGroup extends Component {
               className={ buttonClass }
               onClick={ this.handleFilterClick }
             >
-              <svg width='30px' height='30px' viewBox='0 0 27 27' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlnsXlink='http://www.w3.org/1999/xlink'>
-                <circle id='Oval' fill='#272727' cx='13.5' cy='13.5' r='13.5' />
-                <g id='Group-3' transform='translate(7.000000, 7.000000)' stroke='#FFFFFF' strokeWidth='2' strokeLinecap='round'>
-                  <path d='M2.11472404,2.61799201 L10.1670116,10.6702796' id='Line' transform='translate(6.644136, 6.644136) rotate(-45.000000) translate(-6.644136, -6.644136) ' />
-                  <path d='M2.47058824,10.5944081 L10.5587211,2.50627531' id='Line' transform='translate(7.000000, 7.000000) rotate(-45.000000) translate(-7.000000, -7.000000) ' />
-                </g>
-              </svg>
+              <FilterButton />
             </button>
             <div className='filterDrop'>
               <div>

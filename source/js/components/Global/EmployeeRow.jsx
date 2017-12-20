@@ -20,8 +20,6 @@ export default class EmplyeeRow extends Component {
     this.state = {
       ptoDays: {},
     };
-
-    this.allPtoDates = this.allPtoDates.bind(this);
   }
 
   componentWillMount() {
@@ -35,7 +33,7 @@ export default class EmplyeeRow extends Component {
  * formating all days to apropriate categories
  * @param { object } pto - days on payed leave
  */
-  allPtoDates(pto) {
+  allPtoDates = (pto) => {
     let fromDate;
     let endDate;
     const allPtoDays = [];

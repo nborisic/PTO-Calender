@@ -13,7 +13,7 @@
   .rightButton {
     border: none;
     outline: none;
-    &:hover #Rectangle-6 {
+    &:hover rect {
       fill: $circle-red;
     }
     padding: 0px;

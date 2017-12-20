@@ -32,8 +32,6 @@ export default class CalendarSlider extends Component {
     this.state = {
       emplyeesToRender: this.props.allEmployees,
     };
-
-    this.renderRows = this.renderRows.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {

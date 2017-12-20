@@ -46,7 +46,7 @@
   }
 
   .addFilter {
-    &:hover #Oval {
+    &:hover circle {
       fill: $circle-red;
     }
     align-self: center;
