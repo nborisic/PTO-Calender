@@ -1,0 +1,34 @@
+.employeeContainer {
+  position: relative;
+  display: flex;
+  width: 100%;
+  .monthToggleDiv {
+    @extend .employeeInfo;
+    @include md {
+     display: none !important;
+    };
+  }
+
+}
+.headerViewContainer {
+  @extend .viewContainer;
+  border: none !important;
+}
+.daysRow {
+  position: relative;
+  width: 300%;
+  flex-wrap: wrap;
+  display: flex;
+  height: 100%;
+}
+
+.monthContainer {
+  display: flex;
+  padding-left: 0.16666rem;
+  margin: 0 0 1.25rem 1.583333rem;
+  font-size: 3.25rem;
+  @include md {
+    font-size: 4.25rem;
+    margin-left: 0;
+  };
+}

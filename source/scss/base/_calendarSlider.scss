@@ -1,0 +1,33 @@
+.noMatch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  color: #D4D4D4;
+}
+
+
+.calendarTable {
+  margin: 0px 70px 0px 90px;
+  padding-bottom: 15px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  margin-top: 10px;
+  .calendarHedder {
+    display: flex;
+    justify-content: space-between;
+  }
+  .mobileScreenScrollButtons {
+    display: none;
+    padding-bottom: 0.16666rem;
+    @include md {
+      position: relative;
+      display: flex;
+      flex-shrink: 0;
+      background: white;
+      align-self: baseline;
+      padding-top: 1.83333rem;
+    };
+  }
+}

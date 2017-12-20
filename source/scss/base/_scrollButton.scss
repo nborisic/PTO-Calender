@@ -1,0 +1,24 @@
+.buttonGroup {
+  flex-shrink: 0;
+  align-self: baseline;
+  margin-top: 0.8333rem;
+  @include md {
+    align-self: center;
+    margin: 0;
+  };
+  .leftButton {
+    @extend .rightButton;
+    transform: scale(-1, 1);
+  }
+  .rightButton {
+    border: none;
+    outline: none;
+    &:hover #Rectangle-6 {
+      fill: $circle-red;
+    }
+    padding: 0px;
+    margin-left: 10px;
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+}
