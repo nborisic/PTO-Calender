@@ -1,18 +1,13 @@
-# Marvin ★★
+# Holiday PTO
 
-React and Redux, Webpack 2 boilerplate.
 
-Marvin is internal project by [Work & Co](https://work.co).
-We love React and use it a lot. So Marvin is meant to be a starting point for our React projects.
-But as we love open source too, it is publicly available for anyone interested in using it.
+A component for displaying employees paid time off (PTO) and filtering employees by a given search query.
 
-![Marvin](/marvin.jpg)
+Component was build in [Marvin](https://github.com/workco/marvin), an internal project by [Work & Co](https://work.co).
+Everything related to Marvin, all Marvin documentation can be find on [Marvin](https://github.com/workco/marvin) repository.
 
-Name comes from a fictional character [Marvin](https://en.wikipedia.org/wiki/Marvin_(character)), android from the [The Hitchhiker's Guide to the Galaxy](https://en.wikipedia.org/wiki/The_Hitchhiker%27s_Guide_to_the_Galaxy) book as a homage to it's author [Douglas Adams](https://en.wikipedia.org/wiki/Douglas_Adams).
 
 ## Table of contents
-* [What is this?](#user-content-what-is-this)
-* [Features](#user-content-features)
 * [Setup](#user-content-setup)
 * [npm tasks](#user-content-npm-tasks)
 * [Running in dev mode](#user-content-running-in-dev-mode)
@@ -24,56 +19,6 @@ Name comes from a fictional character [Marvin](https://en.wikipedia.org/wiki/Mar
 * [Removing server rendering related stuff](#user-content-removing-server-rendering-related-stuff)
 * [Linting](#user-content-linting)
 * [Git hooks](#user-content-git-hooks)
-* [Misc](#user-content-misc)
-* [Changelog](#user-content-changelog)
-
-## What is this?
-
-Boilerplate for kicking off React/Redux applications.
-
-It includes complete, minimal react app.
-By complete we mean it has examples for:
-
-- components (both container/views and regular ones)
-- routes
-- reducers (redux)
-- actions (both sync and async),
-- SASS (with autoprefixer)<sup>1</sup>
-- dummy API
-- using assets (in CSS and components)
-- imports relative to the app root
-
-![Example dashboard](/marvin-screenshot.png)
-
-<sup>1</sup> Using source maps breaks urls in the CSS loader - https://github.com/webpack/css-loader/issues/232. Try [this](https://github.com/webpack/css-loader/issues/232#issuecomment-240449998) to fix it (but it breaks testing from local network).
-
-## Features
-
-- [x] React
-- [x] React router
-- [x] Redux
-- [x] Redux Thunk
-- [x] Redux DevTools (you need to have [browser extension](https://github.com/zalmoxisus/redux-devtools-extension) installed)
-- [x] Universal rendering
-- [x] Webpack 3 (development and production config)
-- [x] Hot Module Replacement
-- [x] Immutable reducer data
-- [x] Babel - static props, decorators
-- [x] SASS with autoprefixing
-- [x] Webpack dashboard
-- [x] Linting
-- [x] Included `es6-promise` and `isomorphic-fetch`
-- [x] Preview production build
-- [x] File imports relative to the app root
-- [x] Git hooks - lint before push
-- [x] Tree shaking build
-- [x] Import SVGs as React components
-
-## TODO
-
-- [ ] Switch to [redux-saga](https://github.com/redux-saga/redux-saga)
-- [ ] Server async data
-- [ ] Internationalization
 
 
 ## Setup
@@ -226,94 +171,3 @@ To remove it, run this task:
 ```
 npm run hook-remove
 ```
-
-## Misc
-
-### Importing images in SCSS
-
-Please note that paths to images in SCSS files are relative to `source/scss/base/main.scss` as it imports all of the other `.scss` files.
-
-```
-.BackgroundImgExample {
-  background-image: url(../assets/img/book1.jpg);
-}
-```
-
-Check the example in [source/scss/base/_app.scss](https://github.com/workco/marvin/blob/master/source/scss/base/_app.scss#L164)
-
-### Importing SVGs as components
-
-Just import your `.svg` files from the `source/assets/svg/` folder, and you are good to go.
-
-```
-import CircleSvg from '../../../assets/svg/circle.svg';
-
-// then in your render
-
-<CircleSvg />
-
-```
-
-Check the example in [source/js/views/Dashboard/index.jsx](https://github.com/workco/marvin/blob/master/source/js/views/Dashboard/index.jsx#L5-L7)
-
------
-
-## Changelog
-
-#### 0.2.0
-
-* Webpack updated to v3 and rewritten webpack config
-* Optional universal rendering
-* A lot of code changes
-
-#### 0.1.7
-
-* Migrated to React Router 4.x (thanks @shams-ali)
-* Added .editorconfig file
-* Fixed couple of typos
-
-#### 0.1.6
-
-* Added SVG icon loader (SVG sprite) [#18](https://github.com/workco/react-redux-webpack2-boilerplate/pull/18)
-
-#### 0.1.5
-
-* `npm start` is not using `webpack-dashboard` by default cause it still has issues with Windows
-* Moved `prop-types` from `devDependencies` to `dependencies`
-
-#### 0.1.4
-
-* Resolved React 15.5 [deprecation warnings](https://facebook.github.io/react/blog/2017/04/07/react-v15.5.0.html#new-deprecation-warnings)
-
-#### 0.1.3
-
-* Made sure tree shaking is working
-* Removed DevTools from the code, but it still works if you have browser extension
-
-#### 0.1.2
-
-* Fixed duplicating vendor bundle code
-* Reduced overall bundle size by disabling `devtool` in production
-
-#### 0.1.1
-
-* Fixed running it on Windows machines
-
-#### 0.1.0
-
-* Updated `webpack` to a stable version
-
-#### 0.0.3
-
-* Added pre-push git hook
-* Added `preview` task
-
-#### 0.0.2
-
-* Added Redux Dev Tools.
-* Renamed `client` to `source`
-* Made sure `logger` and `DevTools` are loaded only in development
-
-#### 0.0.1
-
-Initial release

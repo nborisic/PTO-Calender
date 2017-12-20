@@ -74,8 +74,8 @@ export default class Test extends Component {
     }
     const weeksToIterate = breakpointSize === 'mobile' ? 3 : 12;
     for (let k = 0; k < weeksToIterate; k++) {
-      weekStart = calendarStart.clone().add(k, 'week');
       const oneWeek = [];
+      weekStart = calendarStart.clone().add(k, 'week');
       oneWeek.push(weekStart);
       for (let i = 1; i < 5; i++) {
         const oneDay = weekStart.clone().add(i, 'day');

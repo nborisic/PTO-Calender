@@ -80,8 +80,8 @@ export default class CalendarSlider extends Component {
         if (
           this.checkEmployee(employee, { key: 'location', value: location }) &&
           this.checkEmployee(employee, { key: 'discipline', value: discipline }) &&
-          this.checkEmployee(employee, { key: 'projects', value: projects })
-          && this.checkEmployee(employee, { key: 'name', value: staff })
+          this.checkEmployee(employee, { key: 'projects', value: projects }) &&
+          this.checkEmployee(employee, { key: 'name', value: staff })
         ) {
           newSetOfEmploees.push(employee);
         }
