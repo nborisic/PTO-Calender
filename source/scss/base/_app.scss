@@ -6,17 +6,21 @@ $grey-border: #eee;
 $grey-text: #aaa;
 $black: #000;
 $white: #fff;
+$circle-red: #EC1C24;
+$circle-blue: #1C8DEC;
+$border-grey: #E2E2E2;
+$heiglight: #F1F1F1;
 
 html {
-  font-size: 10px;
+  font-size: 12px;
 
-  @include lg {
-    font-size: 12px;
-  }
-
-  @include xl {
-    font-size: 14px;
-  }
+  // @include lg {
+  //   font-size: 12px;
+  // }
+  //
+  // @include xl {
+  //   font-size: 14px;
+  // }
 }
 
 body {
@@ -26,16 +30,7 @@ body {
 
 .App {
   font-size: 1.8rem;
-//  padding: 2rem;
-  padding-top: 0px;
-
-  // @include md {
-  //   padding: 3rem;
-  // }
-  //
-  // @include md {
-  //   padding: 4rem;
-  // }
+  padding-top: 0;
 }
 
 a {
@@ -66,23 +61,17 @@ h3 {
 
 button {
   background: transparent;
-  //border-radius: 1.6rem;
   border: 0.1rem solid $black;
   cursor: pointer;
   font-size: 1.5rem;
-  //padding: 0.7rem 2rem;
 }
 
 button:disabled {
   opacity: 0.3;
 }
 
-// button:hover {
-//   background: $white;
-// }
-
 .Page {
-  max-width: 1280px;
+  max-width: 106.66rem;
   margin: 0 auto;
 }
 
@@ -91,22 +80,22 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 30px;
-  width: 30px;
+  height: 2.5rem;
+  width: 2.5rem;
   border-radius: 50%;
 
-  font-size: 16px;
+  font-size: 1.3333333rem;
   font-family: $newHelvetica-font-family-sans-serif;
 }
 
 .redCircle {
-  background-color: #EC1C24;
+  background-color: $circle-red;
   color: white;
   font-weight: 500;
   line-height: 1;
   cursor: pointer;
   &:hover {
-    background-color: #1C8DEC;
+    background-color: $circle-blue;
   }
   &:hover + .tooltip {
       opacity: 100;
@@ -116,8 +105,8 @@ button:disabled {
 
 .viewContainer {
   width: 100%;
-  border-right: 1px solid #E2E2E2;
-  border-left: 1px solid #E2E2E2;
+  border-right: 0.083333rem solid $border-grey;
+  border-left: 0.083333rem solid $border-grey;
   @include md {
     border: transparent;
   };
@@ -139,11 +128,11 @@ button:disabled {
 
 .monthContainer {
   display: flex;
-  padding-left: 2px;
-  margin: 0 0 25px 19px;
-  font-size: 39px;
+  padding-left: 0.16666rem;
+  margin: 0 0 1.25rem 1.583333rem;
+  font-size: 3.25rem;
   @include md {
-    font-size: 51px;
+    font-size: 4.25rem;
     margin-left: 0;
   };
 }
@@ -151,11 +140,11 @@ button:disabled {
 .weekContainer {
   display: flex;
   align-items: center;
-  padding: 5px 6px 12px 6px;
-  border-left: 1px solid #E2E2E2;
+  padding: 0.41666rem 0.5rem 1rem 0.5rem;
+  border-left: 0.083333rem solid $border-grey;
   @include md {
     border-left: none;
-    padding: 5px 0 12px 0;
+    padding: 0.41666rem 0 1rem 0;
   };
   &:nth-child(4n + 1) {
     border-left-color: transparent;
@@ -165,7 +154,7 @@ button:disabled {
 
 .animateClass {
  @extend .weekContainer;
-  border-left: 1px solid #E2E2E2;
+  border-left: 0.083333rem solid $border-grey;
   @include md {
     border: transparent;
   };
@@ -190,7 +179,7 @@ button:disabled {
     flex-shrink: 0;
     background: white;
     align-self: baseline;
-    padding-top: 22px;
+    padding-top: 1.83333rem;
   };
 }
 .logoGroup {
@@ -204,15 +193,15 @@ button:disabled {
 }
 .filterGroup {
   display: flex;
-  margin-left: 37px;
+  margin-left: 3.08333rem;
   @include md {
-    margin: 35px 0 0 0;
+    margin: 2.91666rem 0 0 0;
   };
   >span {
     flex-shrink: 0;
-    margin-right: 10px;
-    margin-top: 17px;
-    font-size: 14px;
+    margin-right: 0.8333rem;
+    margin-top: 1.41666rem;
+    font-size: 1.16666rem;
     font-family: $newHelvetica-font-family-sans-serif;
   }
   @include md {
@@ -223,26 +212,25 @@ button:disabled {
     flex-wrap: wrap;
     .searchGrop {
       display: flex;
-      padding: 10px 0;
+      padding: 0.8333rem 0;
     }
     .elementDiv {
       display: flex;
       align-self: baseline;
-      margin-top: 7.5px;
-      padding: 8px 9px 9px 16px;
-      border-radius: 4px;
-      border: 1px solid #D0D0D0;
-      margin-right: 10px;
-    //  box-shadow: 0 2px 4px rgba(0, 0, 0, .5), inset 0 1px 3px rgba(0, 0, 0, .5);
+      margin-top: 0.625rem;
+      padding: 0.666rem 0.75rem 0.75rem 1.3333rem;
+      border-radius: 0.333rem;
+      border: 0.083333rem solid #D0D0D0;
+      margin-right: 0.83333rem;
       >span {
-        font-size: 14px;
-        margin-right: 30px;
+        font-size: 1.16666rem;
+        margin-right: 2.5rem;
       }
       >button {
         outline: none;
         border: none;
-        margin-top: 1px;
-        height: 14px;
+        margin-top: 0.083333rem;
+        height: 1.16666rem;
         background-image: url(../assets/img/x_symbol.svg);
         background-position: center center;
         background-repeat: no-repeat;
@@ -252,7 +240,7 @@ button:disabled {
 
   .addFilter {
     &:hover #Oval {
-      fill: #EC1C24;
+      fill: $circle-red;
     }
     align-self: center;
     padding: 0px;
@@ -305,7 +293,7 @@ button:disabled {
       width: 18em;
       &:focus {
         border: none;
-        border-bottom: 1px solid #EC1C24;
+        border-bottom: 1px solid $circle-red;
       }
     }
     .reverseInput {
@@ -330,7 +318,6 @@ button:disabled {
       font-size: 19px;
       width: 18em;
       border-radius: 0 0 4px 4px;
-    //  padding: 10px 0;
       box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .13),
                   inset 0 1px 3px 0  rgba(0, 0, 0, .5);
       max-height: 200px;
@@ -352,8 +339,9 @@ button:disabled {
         padding: 9px 39px 12px 26px;
         border: none;
         &:hover {
+        //  box-shadow: inset 0 3px 5px 0 rgba(0, 0, 0, .13);
           border-radius: 0;
-          background-color: #F1F1F1;
+          background-color: $heiglight;
         }
       }
     }
@@ -361,21 +349,16 @@ button:disabled {
 }
 
 
-
-
-
-
-
 .rightButton {
   border: none;
   outline: none;
   &:hover #Rectangle-6 {
-    fill: #EC1C24;
+    fill: $circle-red;
   }
   padding: 0px;
   margin-left: 10px;
-  height: 30px;
-  width: 30px;
+  height: 2.5rem;
+  width: 2.5rem;
 }
 
 .leftButton {
@@ -386,10 +369,10 @@ button:disabled {
 .buttonGroup {
   flex-shrink: 0;
   align-self: baseline;
-  margin-top: 10px;
+  margin-top: 0.8333rem;
   @include md {
     align-self: center;
-    margin: 0px;
+    margin: 0;
   };
 }
 
@@ -405,19 +388,19 @@ button:disabled {
     flex-grow: 1;
     flex-shrink: 0;
     width: 25%;
-    padding: 5px 0 12px 0;
-    font-size: 21px;
+    padding: 0.41666rem 0 1rem 0;
+    font-size: 1.75rem;
     @include md {
-      font-size: 16px;
+      font-size: 1.3333rem;
       width: 45%;
     };
     >span {
-      margin-left: 10px;
+      margin-left: 0.8333rem;
       align-self: center;
     }
     >img {
-      height: 50px;
-      width: 50px;
+      height: 4.1666rem;
+      width: 4.1666rem;
     }
   }
   .headerViewContainer {
@@ -451,8 +434,8 @@ button:disabled {
 
 .header {
   position: sticky;
-  padding: 54px 70px 35px 90px;
-  top: 0px;
+  padding: 4.5rem 5.8333rem 2.91666rem 7.5rem;
+  top: 0;
   z-index: 500;
   background-color: $white;
   display: flex;
@@ -460,7 +443,7 @@ button:disabled {
 }
 
 .headerBorder {
-  border-bottom: 1px solid #E5E5E5;
+  border-bottom: 0.08333rem solid #E5E5E5;
 }
 .calendarHedder {
   display: flex;
@@ -487,28 +470,28 @@ button:disabled {
 .loading {
   @extend .noMatch;
   >img {
-    width: 150px;
+    width: 12.5rem;
     @include md {
-      width: 100px;
+      width: 8.333rem;
     };
   }
 }
 
 .leaveType {
-  padding: 9px 16px;
+  padding: 0.75rem 1.333rem;
   background: white;
-  border: 1px solid #D4D4D4;
+  border: 0.08333rem solid #D4D4D4;
   color: black;
-  top: -10px;
-  font-size: 14px;
+  top: -0.8333rem;
+  font-size: 1.1666rem;
   text-align: center;
 }
 
 
 .tooltip {
-  width: 90px;
-  top: -41px;
-  left: -30px;
+  width: 7.5rem;
+  top: -3.41666rem;
+  left: -2.5rem;
   opacity: 0;
   transition: opacity 0.3s;
   position: absolute;
@@ -516,24 +499,24 @@ button:disabled {
 }
 
 .dubbleRowPos {
-  top: -58px;
+  top: -4.8333rem;
 }
 
 .rightEdgePos {
-  left: -60px;
+  left: -5rem;
 }
 
 .leftEdgePos {
-  left: 0px;
+  left: 0;
 }
 
 .triangle {
-  left: 38px;
-  top: 30px;
+  left: 3.1666rem;
+  top: 2.5rem;
   position: absolute;
   margin: auto;
-  width: 14px;
-  height: 14px;
+  width: 1.1666rem;
+  height: 1.1666rem;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -541,23 +524,23 @@ button:disabled {
 }
 
 .dubbleRowTriangle {
-  top: 46px;
+  top: 3.8333rem;
 }
 
 .rightEdgeTrinagle {
-  left: 68px;
+  left: 5.666rem;
 }
 
 .leftEdgeTrinagle {
-  left: 8px;
+  left: 0.6666rem;
 }
 
 .wideItemClass {
-  padding: 9px 5px;
-  width: 100px;
+  padding: 0.75rem 0.41666rem;
+  width: 8.333rem;
 }
 
 .arrowHiglight {
   border-radius: 0;
-  background-color: #F1F1F1;
+  background-color: $heiglight;
 }
