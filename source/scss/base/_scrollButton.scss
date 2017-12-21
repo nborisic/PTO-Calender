@@ -13,8 +13,13 @@
   .rightButton {
     border: none;
     outline: none;
+    rect {
+      fill: $black;
+      transition: fill 0.3s;
+    }
     &:hover rect {
       fill: $circle-red;
+      transition: fill 0.3s;
     }
     padding: 0px;
     margin-left: 10px;

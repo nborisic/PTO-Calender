@@ -134,17 +134,18 @@ export default class EmplyeeRow extends Component {
     } else if (animate === 'right') {
       transform = `translateX(-${ (2 / 3) * 100 }%)`;
     }
+    const containerClass = `viewContainer ${ animate ? 'blur' : '' }`;
     return (
       <div className='employeeContainer'>
         <div className='employeeInfo'>
           <img
             className={ breakpoint === 'mobile' ? 'invisible' : '' }
-            src={ oneEmployee.src }
+            src={ oneEmployee.photoLink }
             alt={ oneEmployee.name }
           />
           <span>{ oneEmployee.name }</span>
         </div>
-        <div className='viewContainer'>
+        <div className={ containerClass }>
           <div
             className='daysRow'
             style={ {

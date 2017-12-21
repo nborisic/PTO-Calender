@@ -31,6 +31,10 @@
   };
 }
 
+.blur {
+    filter: blur(0.1666rem);
+}
+
 .oneWeek {
   display: flex;
   width: 100%;
@@ -60,13 +64,15 @@ background-color: $circle-red;
 color: white;
 font-weight: 500;
 line-height: 1;
+transition: background-color 0.3s;
 cursor: pointer;
   &:hover {
     background-color: $circle-blue;
+    transition: background-color 0.3s;
   }
   &:hover + .tooltip {
       opacity: 100;
-      transition: opacity 0.5s;
+      transition: opacity 0.3s;
   }
 }
 

@@ -45,15 +45,15 @@ export default class CalendarSlider extends Component {
  */
   checkEmployee(employee, checkFilter) {
     const statement = [];
-    if (checkFilter.key === 'location' || checkFilter.key === 'name') {
-      for (let j = 0; j < checkFilter.value.length; j++) {
-        statement.push(employee[checkFilter.key] === checkFilter.value[j]);
-      }
-    } else {
+    if (checkFilter.key === 'projects') {
       for (let i = 0; i < employee[checkFilter.key].length; i++) {
         for (let j = 0; j < checkFilter.value.length; j++) {
           statement.push(employee[checkFilter.key][i] === checkFilter.value[j]);
         }
+      }
+    } else {
+      for (let j = 0; j < checkFilter.value.length; j++) {
+        statement.push(employee[checkFilter.key] === checkFilter.value[j]);
       }
     }
     let counter = 0;

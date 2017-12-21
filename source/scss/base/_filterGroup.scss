@@ -46,8 +46,13 @@
   }
 
   .addFilter {
+    circle {
+      fill: $black;
+      transition: fill 0.3s;
+    }
     &:hover circle {
       fill: $circle-red;
+      transition: fill 0.3s;
     }
     align-self: center;
     padding: 0px;

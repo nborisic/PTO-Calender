@@ -181,11 +181,16 @@ export default class EmplyeeRow extends Component {
         transform = monthArray[1] === monthArray[2] ? `translateX(-${ 100 / 3 }%)` : transform;
       }
     }
-
+    let containerClass;
+    if (breakpoint === 'mobile') {
+      containerClass = `headerViewContainer ${ transform === `translateX(-${ 100 / 3 }%)` ? '' : 'blur' }`;
+    } else {
+      containerClass = `headerViewContainer ${ animate ? 'blur' : '' }`;
+    }
     return (
       <div className='employeeContainer'>
         <div className='monthToggleDiv' />
-        <div className='headerViewContainer'>
+        <div className={ containerClass }>
           <div
             className='daysRow'
             style={ {
