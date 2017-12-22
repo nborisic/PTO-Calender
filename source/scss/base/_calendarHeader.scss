@@ -13,6 +13,8 @@
 .headerViewContainer {
   @extend .viewContainer;
   border: none !important;
+  filter: blur(0);
+  transition: filter 0.2s;
 }
 .daysRow {
   position: relative;
