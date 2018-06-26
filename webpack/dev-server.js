@@ -4,7 +4,7 @@ const IS_PRODUCTION = require('./config').IS_PRODUCTION;
 const devServer = {
   contentBase: IS_PRODUCTION ? paths.build : paths.source,
   historyApiFallback: true,
-  port: 3000,
+  port: 3090,
   compress: IS_PRODUCTION,
   inline: !IS_PRODUCTION,
   hot: !IS_PRODUCTION,

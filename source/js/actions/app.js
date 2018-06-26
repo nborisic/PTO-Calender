@@ -1,36 +1,45 @@
-export const TEST_ASYNC_ACTION_START = 'TEST_ASYNC_ACTION_START';
-export const TEST_ASYNC_ACTION_ERROR = 'TEST_ASYNC_ACTION_ERROR';
-export const TEST_ASYNC_ACTION_SUCCESS = 'TEST_ASYNC_ACTION_SUCCESS';
+export const FETCH_USERS_START = 'FETCH_USERS_START';
+export const FETCH_USERS_ERROR = 'FETCH_USERS_ERROR';
+export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
+export const SCREEEN_SIZE = 'SCREEEN_SIZE';
 
 
-// Async action example
-
-function testAsyncStart() {
+function fetchUsersStart() {
   return {
-    type: TEST_ASYNC_ACTION_START,
+    type: FETCH_USERS_START,
   };
 }
 
-function testAsyncSuccess(data) {
+function fetchUsersSuccess(data) {
   return {
-    type: TEST_ASYNC_ACTION_SUCCESS,
+    type: FETCH_USERS_SUCCESS,
     data,
   };
 }
 
-function testAsyncError(error) {
+function fetchUsersError(error) {
   return {
-    type: TEST_ASYNC_ACTION_ERROR,
+    type: FETCH_USERS_ERROR,
     error,
   };
 }
 
-export function testAsync() {
+export function fetchUsers() {
   return function (dispatch) {
-    dispatch(testAsyncStart());
+    dispatch(fetchUsersStart());
+    fetch('https://private-ae838-ptoholiday.apiary-mock.com/users')
+    .then((response) => {
+      return response.json();
+    })
+      .then(data => dispatch(fetchUsersSuccess(data)))
+      .catch(error => dispatch(fetchUsersError(error)));
+  };
+}
 
-    // api.testAsync()
-    //   .then(data => dispatch(testAsyncSuccess(data)))
-    //   .catch(error => dispatch(testAsyncError(error)));
+
+export function setBreakopint(screenSize) {
+  return {
+    type: SCREEEN_SIZE,
+    screenSize,
   };
 }

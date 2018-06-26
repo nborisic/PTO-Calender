@@ -14,15 +14,14 @@ export default class Dashboard extends Component {
     super();
   }
 
-
   render() {
     return (
-      <div className='Dashboard'>
+      <div className='Home'>
         <img
           src={ workAndCoLogoImg }
           alt='Work & Co logo'
         />
-        <div>Wellcome to Dashboard!</div>
+        <div>Wellcome to Home!</div>
       </div>
     );
   }

@@ -10,7 +10,7 @@ $breakpoint-xl: 2000px !default;
 }
 
 @mixin md() {
-  @media (min-width: $breakpoint-md) {
+  @media (max-width: $breakpoint-md) {
     @content;
   }
 }

@@ -1,0 +1,165 @@
+.employeeInfo {
+  background: $white;
+  z-index: 10;
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 0;
+  width: 25%;
+  padding: 0.41666rem 0 1rem 0;
+  font-size: 1.75rem;
+  @include md {
+    font-size: 1.3333rem;
+    width: 45%;
+  };
+  >span {
+    margin-left: 0.8333rem;
+    align-self: center;
+  }
+  >img {
+    height: 4.1666rem;
+    width: 4.1666rem;
+  }
+}
+
+.viewContainer {
+  width: 100%;
+  border-right: 0.083333rem solid $border-grey;
+  border-left: 0.083333rem solid $border-grey;
+  filter: blur(0);
+  transition: filter 0.2;
+  @include md {
+    border: transparent;
+  };
+}
+
+.blur {
+    filter: blur(0.1666rem);
+    transition: filter 0.2s;
+}
+
+.oneWeek {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  @include md {
+    justify-content: space-between;
+  };
+  >div {
+    position: relative;
+  }
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+
+  font-size: 1.3333333rem;
+  font-family: $newHelvetica-font-family-sans-serif;
+}
+
+.redCircle {
+  background-color: $circle-red;
+  color: white;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $circle-blue;
+    transition: background-color 0.3s;
+  }
+  &:hover + .tooltip {
+      opacity: 1;
+  }
+}
+
+.tooltip {
+  width: 7.5rem;
+  top: -3.41666rem;
+  left: -2.5rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+  position: absolute;
+  pointer-events: none;
+}
+
+.dubbleRowPos {
+  top: -4.8333rem;
+}
+
+.rightEdgePos {
+  left: -5rem;
+}
+
+.leftEdgePos {
+  left: 0;
+}
+
+.triangle {
+  left: 3.1666rem;
+  top: 2.5rem;
+  position: absolute;
+  margin: auto;
+  width: 1.1666rem;
+  height: 1.1666rem;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url(../assets/img/triangle.svg);
+}
+
+.dubbleRowTriangle {
+  top: 3.8333rem;
+}
+
+.rightEdgeTrinagle {
+  left: 5.666rem;
+}
+
+.leftEdgeTrinagle {
+  left: 0.6666rem;
+}
+
+.wideItemClass {
+  padding: 0.75rem 0.41666rem;
+  width: 8.333rem;
+}
+
+.leaveType {
+  padding: 0.75rem 1.333rem;
+  background: white;
+  border: 0.08333rem solid #D4D4D4;
+  color: black;
+  top: -0.8333rem;
+  font-size: 1.1666rem;
+  text-align: center;
+}
+
+
+.weekContainer {
+  display: flex;
+  align-items: center;
+  padding: 0.41666rem 0.5rem 1rem 0.5rem;
+  border-left: 0.083333rem solid $border-grey;
+  @include md {
+    border-left: none;
+    padding: 0.41666rem 0 1rem 0;
+  };
+  &:nth-child(4n + 1) {
+    border-left-color: transparent;
+  }
+}
+
+
+.animateClass {
+ @extend .weekContainer;
+  border-left: 0.083333rem solid $border-grey;
+  @include md {
+    border: transparent;
+  };
+}
